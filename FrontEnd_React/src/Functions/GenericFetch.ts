@@ -21,13 +21,16 @@ export abstract class GenericFetch<T> extends AbstractFetch<T> {
     }
 
     async post(data: T): Promise<T> {
-        const response = await fetch(`${this.baseUrl}/`, {
+        const response = await fetch(`${this.baseUrl}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
         });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
         const newData = await response.json();
         return newData as T;
     }
@@ -40,6 +43,9 @@ export abstract class GenericFetch<T> extends AbstractFetch<T> {
             },
             body: JSON.stringify(data),
         });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
         const newData = await response.json();
         return newData as T;
     }
@@ -49,8 +55,9 @@ export abstract class GenericFetch<T> extends AbstractFetch<T> {
         const response = await fetch(`${this.baseUrl}/${id}`, {
             method: "DELETE",
         });
-        if (!response.ok) {
-            throw new Error(`Error al eliminar el elemento con ID ${id}`);
-        }
+        console.log(response);
+        // if (!response.ok) {
+        //     throw new Error(`Error al eliminar el elemento con ID ${id}`);
+        // }
     }
 }

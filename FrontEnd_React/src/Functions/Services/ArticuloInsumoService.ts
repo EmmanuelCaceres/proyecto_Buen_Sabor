@@ -4,7 +4,7 @@ import { GenericFetch } from "../GenericFetch";
 export default class ArticuloInsumoService extends GenericFetch<IArticuloInsumo>{
 
     async getInsumoByDenominacion(codigo:string):Promise<IArticuloInsumo[] | null>{
-        const response = await fetch(`${this.baseUrl}/${codigo}`);
+        const response = await fetch(`${this.baseUrl}${codigo}`);
         if (!response.ok) {
             return null;
         }

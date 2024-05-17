@@ -7,6 +7,6 @@ export default interface IArticulo{
     denominacion:string;
     precioVenta:string;
     unidadMedida:IUnidadMedida;
-    imagenes: IImagen;
+    imagenes: IImagen[];
     categoria: ICategoria; 
 }
