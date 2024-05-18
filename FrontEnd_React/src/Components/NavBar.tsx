@@ -1,51 +1,91 @@
-import { useState } from "react";
+import { cilBuilding, cilCart, cilFastfood, cilGift, cilHome, cilPeople } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 import { Link } from "react-router-dom";
+import '@coreui/coreui/dist/css/coreui.min.css';
+import { CNavGroup, CNavItem, CNavTitle, CSidebar, CSidebarNav } from "@coreui/react";
 
 export default function NavBar() {
-    const [isArticulosOpen, setIsArticulosOpen] = useState(false);
-
-    const ArticulosMenu = () => {
-        setIsArticulosOpen(!isArticulosOpen);
-    };
 
     return (
-        <nav className="navBarContainer">
-            <ul className="listaNavBar">
-                <li>
-                    <Link to={`/`} className="itemNavBar">
-                        Inicio
-                    </Link>
-                </li>
-                <li>
-                    <Link to={`/empresas`} className="itemNavBar">
-                        Empresa
-                    </Link>
-                </li>
-                <li>
-                    <div className="itemNavBar" onClick={ArticulosMenu}>
-                        Artículos
-                    </div>
-                    {isArticulosOpen && (
-                        <ul className="subMenu">
-                            <li>
-                                <Link to={`/articulos`} className="itemNavBar">
-                                    Lista de artículos
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to={`/articulos/categorias`} className="itemNavBar">
-                                    Categorías
-                                </Link>
-                            </li>
-                        </ul>
-                    )}
-                </li>
-                <li>
-                    <Link to={`/promociones`} className="itemNavBar">
-                        Promociones
-                    </Link>
-                </li>
-            </ul>
-        </nav>
+        <div className="sidebar-container">
+            <CSidebar className="border-end d-flex flex-column" style={{ height: '100vh' }}>
+                <CSidebarNav>
+                    <CNavTitle>
+                        Dashboard
+                    </CNavTitle>
+                    <CNavItem>
+                        <Link to="/" className="nav-link" >
+                            <CIcon customClassName="nav-icon" icon={cilHome} />
+                            Inicio
+                        </Link>
+                    </CNavItem>
+
+                    <CNavItem>
+                        <Link to="/empresas" className="nav-link">
+                            <CIcon customClassName="nav-icon" icon={cilBuilding} />
+                            Empresa
+                        </Link>
+                    </CNavItem>
+                    <CNavGroup
+                        toggler={
+                            <>
+                                <CIcon customClassName="nav-icon" icon={cilFastfood} />
+                                Articulos
+                            </>
+                        }
+                    >
+                        <CNavItem>
+                            <Link to="/articulos" className="nav-link" >
+                                <span className="nav-icon"><span className="nav-icon-bullet"></span></span>
+                                Lista de Productos
+                            </Link>
+                        </CNavItem>
+                        <CNavItem>
+                            <Link to="/articulos/categorias" className="nav-link">
+                                <span className="nav-icon"><span className="nav-icon-bullet"></span></span>
+                                Categorías
+                            </Link>
+                        </CNavItem>
+                    </CNavGroup>
+
+                    <CNavItem>
+                        <Link to="/promociones" className="nav-link">
+                            <CIcon customClassName="nav-icon" icon={cilGift} />
+                            Promociones
+                        </Link>
+                    </CNavItem>
+
+                    <CNavGroup
+                        toggler={
+                            <>
+                                <CIcon customClassName="nav-icon" icon={cilPeople} />
+                                Empleados
+                            </>
+                        }
+                    >
+                        <CNavItem>
+                            <Link to="/empleados" className="nav-link" >
+                                <span className="nav-icon"><span className="nav-icon-bullet"></span></span>
+                                Lista de Empleados
+                            </Link>
+                        </CNavItem>
+                        <CNavItem>
+                            <Link to="/roles" className="nav-link">
+                                <span className="nav-icon"><span className="nav-icon-bullet"></span></span>
+                                Roles
+                            </Link>
+                        </CNavItem>
+                    </CNavGroup>
+                    <CNavItem>
+                        <Link to="/insumos" className="nav-link">
+                            <CIcon customClassName="nav-icon" icon={cilCart} />
+                            Insumos
+                        </Link>
+                    </CNavItem>
+                </CSidebarNav>
+            </CSidebar>
+        </div>
+
+        
     );
 }
