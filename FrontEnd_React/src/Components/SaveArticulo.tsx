@@ -58,7 +58,11 @@ export default function SaveArticulo() {
         const result = new ArticuloManufacturadoService(baseUrl);
         await result.getById(id)
             .then(data => {
-                setArticulosManufacturado(data);
+                if (data !== null) {
+                    setArticulosManufacturado(data);
+                } else {
+                    console.log("El artículo manufacturado no se encontró.");
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -135,17 +139,17 @@ export default function SaveArticulo() {
         }
     }
 
-    const saveArticulo = () => {
-        
-        console.log(articuloManufacturado)
-
-        if(Number(id) != 0){
-            new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").put(Number(id),articuloManufacturado);
-        }else{
-            new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").post(articuloManufacturado);
+    const saveArticulo = async () => {
+        console.log(articuloManufacturado);
+        if (Number(id) !== 0) {
+            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").put(Number(id), articuloManufacturado);
+        } else {
+            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").post(articuloManufacturado);
         }
-        // navigate(-1)
-    }
+        alert("Articulo guardado con exito!");
+        handleClose();
+        navigate(-1);
+    };
     // const handleFileChange = (e)=>{
     //     const selectedFile = e.target.files[0];
     //     const imageUrl = selectedFile.name; // Suponiendo que aquí guardas la URL de la imagen
