@@ -10,8 +10,8 @@ import lombok.*;
 @Getter
 @ToString
 @Builder
-public class ImagenArticulo extends Base{
-
-    private String url;
-
+public class UsuarioEmpleado extends Base{
+    private String auth0Id;
+    private String userName;
 }
+

@@ -8,10 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
 @Builder
-public class ImagenArticulo extends Base{
-
+public class ImagenCliente extends Base{
     private String url;
-
 }

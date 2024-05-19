@@ -1,6 +1,7 @@
 package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Entity
@@ -8,10 +9,11 @@ import lombok.*;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
 @Builder
-public class ImagenArticulo extends Base{
+public class PromocionDetalle extends Base{
 
-    private String url;
+    private int cantidad;
 
+    @ManyToOne
+    private Articulo articulo;
 }

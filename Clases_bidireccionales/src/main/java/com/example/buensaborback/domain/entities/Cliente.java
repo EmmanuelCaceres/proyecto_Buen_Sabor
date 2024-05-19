@@ -1,5 +1,6 @@
 package com.example.buensaborback.domain.entities;
 
+import com.example.buensaborback.domain.entities.enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,11 +22,14 @@ public class Cliente extends Base{
     private String telefono;
     private String email;
     private LocalDate fechaNacimiento;
+    private Rol tipoCliente;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private UsuarioCliente usuarioCliente;
 
+    @OneToOne
+    protected ImagenCliente imagenCliente;
 
     @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Builder.Default

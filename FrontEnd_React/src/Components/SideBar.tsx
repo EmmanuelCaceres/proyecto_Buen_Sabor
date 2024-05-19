@@ -1,14 +1,14 @@
-import { cilBuilding, cilCart, cilCloudDownload, cilFastfood, cilGift, cilHome, cilLayers, cilPeople, cilPuzzle, cilSpeedometer } from "@coreui/icons";
+import { cilBuilding, cilCart, cilFastfood, cilGift, cilHome, cilPeople } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { Link } from "react-router-dom";
 import '@coreui/coreui/dist/css/coreui.min.css';
-import { CBadge, CNavGroup, CNavItem, CNavTitle, CSidebar, CSidebarBrand, CSidebarHeader, CSidebarNav, CSidebarToggler } from "@coreui/react";
+import { CNavGroup, CNavItem, CNavTitle, CSidebar, CSidebarNav } from "@coreui/react";
 
 export default function SideBar() {
 
     return (
         <div className="sidebar-container ">
-            <CSidebar className="border-end d-flex flex-column d-block" style={{ height: '100vh' }}>
+            <CSidebar className="border-end d-flex flex-column" style={{ height: '100vh' }}>
                 <CSidebarNav>
                     <CNavTitle>
                         Dashboard
