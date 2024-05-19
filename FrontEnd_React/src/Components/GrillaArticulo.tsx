@@ -2,8 +2,6 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ArticuloManufacturadoService from '../Functions/Services/ArticuloManufacturadoService';
 import IArticuloManufacturado from '../Entities/IArticuloManufacturado';
-import { Button } from 'react-bootstrap';
-
 import masObject from '../assets/circle-plus-svgrepo-com.svg';
 export default function GrillaArticulo() {
     const [inputValue, setInputValue] = useState('');

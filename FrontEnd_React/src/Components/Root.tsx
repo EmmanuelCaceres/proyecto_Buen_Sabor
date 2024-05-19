@@ -4,11 +4,11 @@ import NavBar from "./NavBar"
 
 export default function Root(){
     return(
-      <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <div /*style={{ display: "flex", flexDirection: "column", height: "100vh" }}*/>
             <NavBar />
             <div style={{ display: "flex", flex: 1 }}>
                 <SideBar />
-                <div style={{ flex: 1, overflowY: "auto" }}>
+                <div /*style={{ flex: 1, overflowY: "auto" }}*/>
                     <Outlet />
                 </div>
             </div>

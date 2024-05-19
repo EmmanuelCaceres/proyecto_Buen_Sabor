@@ -1,10 +1,8 @@
-import { CButton, CCloseButton, CContainer, CDropdown, CDropdownDivider, CDropdownItem, CDropdownMenu, CDropdownToggle, CForm, CFormInput, CNavItem, CNavLink, CNavbar, CNavbarBrand, CNavbarNav, CNavbarToggler, COffcanvas, COffcanvasBody, COffcanvasHeader, COffcanvasTitle } from "@coreui/react"
+import { CContainer, CNavbar, CNavbarBrand, CNavbarToggler } from "@coreui/react"
 import { useState } from "react"
-import SideBar from "./SideBar"
 
 
 export default function NavBar() {
-    const [visible, setVisible] = useState(false)
     const [sidebarVisible, setSidebarVisible] = useState(false)
 
     const toggleSidebar = () => {
@@ -12,7 +10,7 @@ export default function NavBar() {
     };
 
     return (
-        <CNavbar className="bg-primary">
+        <CNavbar className="bg-primary w-100">
             <CContainer fluid>
                 <CNavbarToggler onClick={toggleSidebar} className="me-3" /> 
                 <CNavbarBrand href="#">

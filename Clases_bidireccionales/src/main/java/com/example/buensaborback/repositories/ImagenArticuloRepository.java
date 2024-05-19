@@ -2,7 +2,8 @@ package com.example.buensaborback.repositories;
 
 import com.example.buensaborback.domain.entities.ArticuloManufacturado;
 import com.example.buensaborback.domain.entities.ImagenArticulo;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ImagenArticuloRepository extends JpaRepository<ImagenArticulo,Long> {
+@Repository
+public interface ImagenArticuloRepository extends BaseRepository<ImagenArticulo,Long> {
 }

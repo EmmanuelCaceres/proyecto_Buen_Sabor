@@ -48,4 +48,8 @@ public class Pedido extends Base{
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "empleado_id")
+    private Empleado empleado;
+
 }
