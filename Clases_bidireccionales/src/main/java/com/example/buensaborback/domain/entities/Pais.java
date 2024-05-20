@@ -20,6 +20,7 @@ public class Pais extends Base{
 
     private String nombre;
 
-    @OneToMany(mappedBy = "pais",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pais",fetch = FetchType.LAZY)
+    @Builder.Default
     private Set<Provincia> provincias = new HashSet<>();
 }

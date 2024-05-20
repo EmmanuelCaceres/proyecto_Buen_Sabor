@@ -15,9 +15,10 @@ import java.io.Serializable;
 @Getter
 @ToString
 @Setter
+@SuperBuilder
 public abstract class Base implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
 }

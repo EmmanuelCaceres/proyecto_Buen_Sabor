@@ -33,6 +33,7 @@ public class Promocion extends Base {
     private Set<ImagenPromocion> imagenes = new HashSet<>();
 
     @ManyToMany (mappedBy = "promociones")
+    @Builder.Default
     private Set<Sucursal> sucursales = new HashSet<>();
 
     @ManyToMany
