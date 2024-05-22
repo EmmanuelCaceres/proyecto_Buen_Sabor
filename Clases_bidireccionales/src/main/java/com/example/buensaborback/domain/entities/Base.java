@@ -17,8 +17,10 @@ import java.io.Serializable;
 @Setter
 @SuperBuilder
 public abstract class Base implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    private boolean eliminado;
 
 }
