@@ -1,6 +1,8 @@
 package com.example.buensaborback.Services;
 
 import com.example.buensaborback.domain.entities.ImagenArticulo;
+import com.example.buensaborback.repositories.ImagenArticuloRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,9 @@ import java.util.UUID;
 @Service
 public class ImagenService implements BaseService<ImagenArticulo>{
 
-    private final static String UPLOADS_FOLDER = "uploads";
+    @Autowired
+    private ImagenArticuloRepository imagenArticuloRepository;
+
     @Override
     public List<ImagenArticulo> findAll() throws Exception {
         return null;
@@ -31,7 +35,12 @@ public class ImagenService implements BaseService<ImagenArticulo>{
 
     @Override
     public ImagenArticulo save(ImagenArticulo entity) throws Exception {
-        return null;
+        try{
+            entity = imagenArticuloRepository.save(entity);
+            return entity;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     @Override
@@ -52,26 +61,26 @@ public class ImagenService implements BaseService<ImagenArticulo>{
         }
         return resource;
     }
-
-    public String copy(MultipartFile file) throws IOException {
-        String uniqueFilename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-        Path rootPath = getPath(uniqueFilename);
-        Files.copy(file.getInputStream(), rootPath);
-        return uniqueFilename;
-    }
-
-    public boolean delete(String filename) {
-        Path rootPath = getPath(filename);
-        File file = rootPath.toFile();
-        if(file.exists() && file.canRead()) {
-            if(file.delete()) {
-                return true;
-            }
-        }
-        return false;
-    }
+//
+//    public String copy(MultipartFile file) throws IOException {
+//        String uniqueFilename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+//        Path rootPath = getPath(uniqueFilename);
+//        Files.copy(file.getInputStream(), rootPath);
+//        return uniqueFilename;
+//    }
+//
+//    public boolean delete(String filename) {
+//        Path rootPath = getPath(filename);
+//        File file = rootPath.toFile();
+//        if(file.exists() && file.canRead()) {
+//            if(file.delete()) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public Path getPath(String filename) {
-        return Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
+        return Paths.get("uploads/").resolve(filename).toAbsolutePath();
     }
 }

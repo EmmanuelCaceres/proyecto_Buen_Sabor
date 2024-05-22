@@ -1,5 +1,5 @@
 import IUnidadMedida from "./IUnidadMedida";
-import IImagen from "./IImagen";
+import IImagenArticulo from "./IImagenArticulo";
 import ICategoria from "./ICategoria";
 
 export default interface IArticulo{
@@ -7,6 +7,6 @@ export default interface IArticulo{
     denominacion:string;
     precioVenta:string;
     unidadMedida:IUnidadMedida;
-    imagenes: IImagen[];
+    imagenes: IImagenArticulo[];
     categoria: ICategoria; 
 }

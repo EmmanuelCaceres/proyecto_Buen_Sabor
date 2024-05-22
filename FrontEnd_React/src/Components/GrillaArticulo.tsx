@@ -69,7 +69,7 @@ export default function GrillaArticulo() {
                 articulosManufacturados.map((articulo: IArticuloManufacturado) => {
                     return (
                         <div className="itemGrilla" key={articulo.id}>
-                            <div></div>
+                            <img width={64} height={64} src={'http://localhost:8080/imagenArticulo/uploads/'+ articulo.imagenes[0].url} alt="imagenArticulo" />
                             <p>{articulo.denominacion}</p>
                             <p>{articulo.descripcion}</p>
                             <div>{articulo.precioVenta}</div>
