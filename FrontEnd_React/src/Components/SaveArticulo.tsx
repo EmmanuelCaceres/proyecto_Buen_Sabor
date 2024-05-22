@@ -9,11 +9,12 @@ import arrow_left from "../assets/arrow-circle-left-svgrepo-com.svg";
 import ArticuloManufacturadoService from "../Functions/Services/ArticuloManufacturadoService";
 import ArticuloInsumoService from "../Functions/Services/ArticuloInsumoService";
 import IArticuloManufacturadoDetalles from "../Entities/IArticuloManufacturadoDetalle";
-import IImagen from "../Entities/IImagen";
+import IImagen from "../Entities/IImagenArticulo";
 import ICategoria from "../Entities/ICategoria";
 import CatetgoriaService from "../Functions/Services/CategoriaService";
 import IUnidadMedida from "../Entities/IUnidadMedida";
 import UnidadMedidaService from "../Functions/Services/UnidadMedidaService";
+import ImagenArticuloService from "../Functions/Services/ImagenArticuloService";
 
 export default function SaveArticulo() {
     const { id } = useParams();
@@ -32,6 +33,31 @@ export default function SaveArticulo() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const onFileChange = (event) => {
+        const formData = new FormData();
+        formData.append("file", event.target.files[0]);
+        console.log(formData)
+
+        const result = new ImagenArticuloService("http://localhost:8080/imagenArticulo");
+        result.postImagen(formData)
+        .then(data => {
+            console.log(data);
+            setArticulosManufacturado(prevState => ({
+                ...prevState,
+                imagenes: [
+                    ...prevState.imagenes,
+                    {
+                        id: data.id,
+                        url: data.url
+                    }
+                ]
+            }));
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    };
 
     const [articuloManufacturado, setArticulosManufacturado] = useState<IArticuloManufacturado>(
         {
@@ -188,6 +214,7 @@ export default function SaveArticulo() {
                 <input type="text" id="precioVenta" name="precioVenta" defaultValue={articuloManufacturado.precioVenta} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, precioVenta: e.target.value })} />
                 <label htmlFor="tiempoEstimadoMinutos">Tiempo Estimado(minutos)</label>
                 <input type="number" id="tiempoEstimadoMinutos" name="tiempoEstimadoMinutos" defaultValue={Number(articuloManufacturado.tiempoEstimadoMinutos)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, tiempoEstimadoMinutos: Number(e.target.value) })} />
+                <input type="file" onChange={onFileChange} />
                 <div style={{ display: "flex", justifyContent: "start",gap:"3rem",margin:"1rem 0" }}>
                     <div>
                         <label htmlFor="categoria" style={{marginRight:"1rem"}}>Categorias</label>
