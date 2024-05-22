@@ -27,13 +27,14 @@ public class Promocion extends Base {
     private Double precioPromocional;
     private TipoPromocion tipoPromocion;
 
-    @OneToMany(mappedBy = "promocion",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany
+    @JoinColumn(name = "promocion_id")
     @Builder.Default
-    private Set<Imagen> imagenes= new HashSet<>();
+    private Set<ImagenPromocion> imagenes = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "sucursal_id")
-    private Sucursal sucursal;
+    @ManyToMany (mappedBy = "promociones")
+    @Builder.Default
+    private Set<Sucursal> sucursales = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "promocion_articulo",
@@ -42,4 +43,8 @@ public class Promocion extends Base {
     @Builder.Default
     private Set<Articulo> articulos= new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "promocion_id")
+    @Builder.Default
+    private Set<PromocionDetalle> promocionDetalles = new HashSet<>();
 }

@@ -18,11 +18,11 @@ public class Provincia extends Base{
 
     private String nombre;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY) // Considera usar FetchType.LAZY si es posible
     @JoinColumn(name = "pais_id")
     private Pais pais;
 
-    @OneToMany(mappedBy = "provincia",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Localidad> localidades = new HashSet<>();
 

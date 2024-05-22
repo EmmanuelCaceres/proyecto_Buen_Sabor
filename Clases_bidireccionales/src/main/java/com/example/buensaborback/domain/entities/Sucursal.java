@@ -36,7 +36,11 @@ public class Sucursal extends Base{
     @Builder.Default
     private Set<Categoria> categorias = new HashSet<>();
 
-    @OneToMany(mappedBy = "sucursal", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @JoinTable(name = "sucursal_promocion",
+            joinColumns = @JoinColumn(name = "promocion_id"),
+            inverseJoinColumns = @JoinColumn(name = "sucursal_id"))
     @Builder.Default
     private Set<Promocion> promociones = new HashSet<>();
 
@@ -44,4 +48,7 @@ public class Sucursal extends Base{
     @Builder.Default
     private Set<Pedido> pedidos = new HashSet<>();
 
-}
+    @OneToMany(mappedBy = "sucursal",cascade = CascadeType.REFRESH,fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<Empleado> empleados = new HashSet<>();
+    }

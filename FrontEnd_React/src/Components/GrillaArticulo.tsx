@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ArticuloManufacturadoService from '../Functions/Services/ArticuloManufacturadoService';
 import IArticuloManufacturado from '../Entities/IArticuloManufacturado';
-import { Button } from 'react-bootstrap';
-
 import masObject from '../assets/circle-plus-svgrepo-com.svg';
 export default function GrillaArticulo() {
     const [inputValue, setInputValue] = useState('');
@@ -31,7 +29,7 @@ export default function GrillaArticulo() {
             })
     }
 
-    const handleKeyPress = (event) => {
+    const handleKeyPress = (event: { key: string; }) => {
         if (event.key === 'Enter') {
             console.log(inputValue)
             searchItem(inputValue);
@@ -44,7 +42,7 @@ export default function GrillaArticulo() {
         window.location.reload;
     }
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: { target: { value: SetStateAction<string>; }; }) => {
         setInputValue(event.target.value);
     };
 

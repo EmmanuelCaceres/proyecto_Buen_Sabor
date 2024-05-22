@@ -18,8 +18,10 @@ public class Domicilio extends Base{
     private String calle;
     private Integer numero;
     private Integer cp;
+    private Integer piso;
+    private Integer nroDpto;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "localidad_id")
     private Localidad localidad;
 
@@ -28,7 +30,7 @@ public class Domicilio extends Base{
     @Builder.Default
     private Set<Cliente> clientes = new HashSet<>();
 
-    @OneToMany(mappedBy = "domicilio",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "domicilio",fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Pedido> pedidos = new HashSet<>();
 
