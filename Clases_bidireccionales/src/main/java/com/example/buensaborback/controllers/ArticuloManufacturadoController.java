@@ -50,6 +50,7 @@ public class ArticuloManufacturadoController {
     @PostMapping("")
     public ResponseEntity save(@RequestBody ArticuloManufacturado entity){
         try {
+
 //            if(!imagen.isEmpty()){
 //                Path directorioImagenes = Paths.get("C:\\Users\\caemm\\Documents\\Tecnicatura\\Cuarto semestre\\Buen_sabor\\FrontEnd_React\\src\\assets\\imagenes");
 //                String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
