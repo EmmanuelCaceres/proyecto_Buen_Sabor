@@ -50,7 +50,7 @@ export default function SaveArticulo() {
         result.postImagen(formData)
             .then(data => {
                 if (data) {
-                    console.log(data);
+                    //console.log(data);
                     setArticulosManufacturado(prevState => ({
                         ...prevState,
                         imagenes: [
@@ -74,7 +74,7 @@ export default function SaveArticulo() {
         {
             id: Number(id),
             denominacion: '',
-            precioVenta: '',
+            precioVenta: 0,
             unidadMedida: {
                 id: 0,
                 denominacion: '',
@@ -98,6 +98,7 @@ export default function SaveArticulo() {
             .then(data => {
                 if (data !== null) {
                     setArticulosManufacturado(data);
+                    console.log("DATAA"+ JSON.stringify(data))
                 } else {
                     console.log("El artículo manufacturado no se encontró.");
                 }
@@ -178,7 +179,7 @@ export default function SaveArticulo() {
     }
 
     const saveArticulo = async () => {
-        console.log(articuloManufacturado);
+        //console.log(articuloManufacturado);
         if (Number(id) !== 0) {
             await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").put(Number(id), articuloManufacturado);
         } else {
@@ -200,7 +201,7 @@ export default function SaveArticulo() {
 
 
     useEffect(() => {
-        console.log(id)
+        //console.log(id)
         getAllCategories()
         getAllUnidad()
         if (Number(id) != 0) {
@@ -208,7 +209,7 @@ export default function SaveArticulo() {
 
         }
         // console.log(articuloManufacturado.articuloManufacturadoDetalles)
-        console.log(categoria)
+        //console.log(categoria)
     }, ([]))
 
     return (
@@ -223,7 +224,7 @@ export default function SaveArticulo() {
                 <label htmlFor="descripcion">Descripción</label>
                 <textarea id="descripcion" name="descripcion" defaultValue={articuloManufacturado.descripcion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, descripcion: e.target.value })}></textarea>
                 <label htmlFor="precioVenta">Precio de Venta</label>
-                <input type="text" id="precioVenta" name="precioVenta" defaultValue={articuloManufacturado.precioVenta} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, precioVenta: e.target.value })} />
+                <input type="text" id="precioVenta" name="precioVenta" defaultValue={Number(articuloManufacturado.precioVenta)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, precioVenta: Number(e.target.value )})} />
                 <label htmlFor="tiempoEstimadoMinutos">Tiempo Estimado(minutos)</label>
                 <input type="number" id="tiempoEstimadoMinutos" name="tiempoEstimadoMinutos" defaultValue={Number(articuloManufacturado.tiempoEstimadoMinutos)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, tiempoEstimadoMinutos: Number(e.target.value) })} />
                 <input type="file" onChange={onFileChange} />

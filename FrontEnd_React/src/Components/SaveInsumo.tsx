@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import IArticuloInsumo from "../Entities/IArticuloInsumo";
 import arrow_left from "../assets/arrow-circle-left-svgrepo-com.svg";
 import ArticuloInsumoService from "../Functions/Services/ArticuloInsumoService";
-//import IImagen from "../Entities/IImagenArticulo";
 import ICategoria from "../Entities/ICategoria";
 import CatetgoriaService from "../Functions/Services/CategoriaService";
 import IUnidadMedida from "../Entities/IUnidadMedida";
@@ -14,17 +13,29 @@ import ImagenArticuloService from "../Functions/Services/ImagenArticuloService";
 export default function SaveInsumo() {
     const { id } = useParams();
     const navigate = useNavigate();
-    // const [imgUrl, setImgUrl] = useState<IImagen>(
-    //     {
-    //         id: 0,
-    //         url: ''
-    //     }
-    // );
     const [categoria, setCategoria] = useState<ICategoria[]>([])
     const [unidadMedida, setUnidadMedida] = useState<IUnidadMedida[]>([]);
-
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
+    const [articuloInsumo, setArticulosInsumo] = useState<IArticuloInsumo>({
+        id: Number(id),
+        denominacion: '',
+        precioVenta: 0,
+        unidadMedida: {
+            id: 0,
+            denominacion: '',
+        },
+        imagenes: [],
+        categoria: {
+            id: 0,
+            denominacion: '',
+            sucursales: []
+        },
+        precioCompra: 0,
+        stockActual: 0,
+        stockMaximo: 0,
+        esParaElaborar: true,
+    });
 
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const formData = new FormData();
@@ -42,7 +53,6 @@ export default function SaveInsumo() {
         result.postImagen(formData)
             .then(data => {
                 if (data) {
-                    console.log(data);
                     setArticulosInsumo(prevState => ({
                         ...prevState,
                         imagenes: [
@@ -62,34 +72,13 @@ export default function SaveInsumo() {
             });
     };
 
-    const [articuloInsumo, setArticulosInsumo] = useState<IArticuloInsumo>(
-        {
-            id: Number(id),
-            denominacion: '',
-            precioVenta: '',
-            unidadMedida: {
-                id: 0,
-                denominacion: '',
-            },
-            imagenes: [],
-            categoria: {
-                id: 0,
-                denominacion: '',
-                sucursales: []
-            },
-            precioCompra: 0,
-            stockActual: 0,
-            stockMaximo: 0,
-            esParaElaborar: true,
-        }
-    );
-
     const getArticuloInsumo = async (baseUrl: string, id: number) => {
         const result = new ArticuloInsumoService(baseUrl);
         await result.getById(id)
             .then(data => {
                 if (data !== null) {
                     setArticulosInsumo(data);
+                    console.log("DATA: " + JSON.stringify(data, null, 2));
                 } else {
                     console.log("El insumo no se encontró.");
                 }
@@ -98,16 +87,6 @@ export default function SaveInsumo() {
                 console.log(error);
             })
     }
-
-    // const buscarInsumoXDenominacion = async () => {
-    //     const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumo/search?denominacion=");
-    //     const insumosResult = await result.getInsumoByDenominacion(inputValue);
-    //     if (insumosResult) {
-    //         setInsumos(insumosResult);
-    //     } else {
-    //         setInsumos([]);
-    //     }
-    // }
 
 
     const getAllCategories = async () => {
@@ -121,35 +100,6 @@ export default function SaveInsumo() {
         const unidadMedidaResult = await result.getAll();
         setUnidadMedida(unidadMedidaResult)
     }
-
-    // const agregarInsumo = (insumo: IArticuloInsumo) => {
-    //     const existeInsumo = articuloManufacturado.articuloManufacturadoDetalles.find((insumoDetalle) => insumoDetalle.articuloInsumo.id === insumo.id)
-    //     if (existeInsumo) {
-    //         alert("El insumo ya existe en el arreglo");
-    //     } else {
-    //         const nuevoDetalle: IArticuloManufacturadoDetalles = {
-    //             id: 0,
-    //             cantidad: 0,
-    //             articuloInsumo: insumo
-    //         };
-    //         setArticulosManufacturado(prevState => ({
-    //             ...prevState,
-    //             articuloManufacturadoDetalles: [...prevState.articuloManufacturadoDetalles, nuevoDetalle]
-    //         }));
-    //     }
-    // };
-
-
-    
-    //La funcion funciona correctamente pero a la hora de eliminar el primer elemento afuera del modal la pagina se recarga y se pierde todo el proceso
-    //Se debe revisar o preguntar
-    // const deleteInsumo = async (articuloInsumo: IArticuloInsumo) => {
-    //     let articuloInsumoFilter: IArticuloManufacturadoDetalles[] = [];
-    //     if (articuloManufacturado.articuloManufacturadoDetalles) {
-    //         articuloInsumoFilter = articuloManufacturado.articuloManufacturadoDetalles.filter(detalle => detalle.articuloInsumo.id !== articuloInsumo.id);
-    //     }
-    //     setArticulosManufacturado(prevState => ({ ...prevState, articuloManufacturadoDetalles: articuloInsumoFilter }));
-    // }
 
     const handleChangeCategorySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const categoriaSeleccionadaId = parseInt(e.target.value); // Convertir a número
@@ -175,7 +125,6 @@ export default function SaveInsumo() {
     }
 
     const saveArticulo = async () => {
-        console.log(articuloInsumo);
         if (Number(id) !== 0) {
             await new ArticuloInsumoService("http://localhost:8080/articuloInsumo").put(Number(id), articuloInsumo);
         } else {
@@ -195,24 +144,22 @@ export default function SaveInsumo() {
     //     });
     // }
     const handleRadioChange = (e: { target: { value: string; }; }) => {
+        const esParaElaborar = e.target.value === 'true';
         setArticulosInsumo({ 
             ...articuloInsumo, 
-          esParaElaborar: e.target.value === 'true' // Convertir a booleano
+            esParaElaborar,
+            precioVenta: esParaElaborar ? 0 : articuloInsumo.precioVenta // Si esParaElaborar es true, precioVenta será 0
         });
     };
 
 
     useEffect(() => {
-        console.log(id)
         getAllCategories()
         getAllUnidad()
-        if (Number(id) != 0) {
+        if (Number(id) !== 0) {
             getArticuloInsumo("http://localhost:8080/articuloInsumo", Number(id))
-
         }
-        // console.log(articuloManufacturado.articuloManufacturadoDetalles)
-        console.log(categoria)
-    }, ([]))
+    }, [id])
 
     return (
         <div className="container">
@@ -222,13 +169,13 @@ export default function SaveInsumo() {
             </Link>
             <form action="" className="formContainer">
                 <label htmlFor="denominacion">Nombre del insumo</label>
-                <input type="text" id="denominacion" name="denominacion" defaultValue={articuloInsumo.denominacion} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, denominacion: e.target.value })} />
+                <input type="text" id="denominacion" name="denominacion" value={articuloInsumo.denominacion} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, denominacion: e.target.value })} />
                 <label htmlFor="precioCompra">Precio de compra </label>
-                <input id="precioCompra" name="precioCompra" defaultValue={Number(articuloInsumo.precioCompra)} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, precioCompra: Number(e.target.value) })}></input>
+                <input type="number" id="precioCompra" name="precioCompra" value={articuloInsumo.precioCompra} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, precioCompra: Number(e.target.value) })}></input>
                 <label htmlFor="stockActual">Stock actual</label>
-                <input type="text" id="stockActual" name="stockActual" defaultValue={Number(articuloInsumo.stockActual)} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, stockActual: Number(e.target.value) })} />
+                <input type="text" id="stockActual" name="stockActual" value={Number(articuloInsumo.stockActual)} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, stockActual: Number(e.target.value) })} />
                 <label htmlFor="stockMaximo">Stock maximo</label>
-                <input type="number" id="stockMaximo" name="stockMaximo" defaultValue={Number(articuloInsumo.stockMaximo)} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, stockMaximo: Number(e.target.value) })} />
+                <input type="number" id="stockMaximo" name="stockMaximo" value={Number(articuloInsumo.stockMaximo)} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, stockMaximo: Number(e.target.value) })} />
                 <input type="file" onChange={onFileChange} />
                 <div style={{ display: "flex", justifyContent: "start",gap:"3rem",margin:"1rem 0" }}>
                     <div>
@@ -257,11 +204,7 @@ export default function SaveInsumo() {
                         </select>
                     </div>
                 </div>
-                {/* <label htmlFor="imagen">Imagen</label>
-                <input type="file" name="imagen" id="imagen" onChange={handleFileChange}/> */}
                 <label htmlFor="esParaElaborar">Es un insumo para Elaborar? </label>
-                {/* <input type="radio" id="esParaElaborar" name="esParaElaborar" defaultValue={articuloInsumo.esParaElaborar} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, esParaElaborar: e.target.value })}></input>
-                <input type="radio" id="esParaElaborar2" name="esParaElaborar" defaultValue={articuloInsumo.esParaElaborar} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, esParaElaborar: e.target.value })}></input> */}
                 <label>
                     <input
                     type="radio"
@@ -285,6 +228,18 @@ export default function SaveInsumo() {
                     No
                 </label>
 
+                {articuloInsumo.esParaElaborar === false && (
+                    <>
+                        <label htmlFor="precioVenta">Precio de Venta</label>
+                        <input 
+                            type="number" 
+                            id="precioVenta" 
+                            name="precioVenta" 
+                            value={articuloInsumo.precioVenta} 
+                            onChange={(e) => setArticulosInsumo({ ...articuloInsumo, precioVenta: Number(e.target.value) })} 
+                        />
+                    </>
+                )}
             </form>
 
             <button className="btn btn-primary" onClick={saveArticulo}>Guardar</button>
