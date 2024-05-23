@@ -46,7 +46,7 @@ export default function SaveArticulo() {
         formData.append("file", file);
         console.log(formData);
     
-        const result = new ImagenArticuloService("http://localhost:8080/imagenArticulo");
+        const result = new ImagenArticuloService("http://localhost:8080/imagenArticulos");
         result.postImagen(formData)
             .then(data => {
                 if (data) {
@@ -83,7 +83,9 @@ export default function SaveArticulo() {
             categoria: {
                 id: 0,
                 denominacion: '',
-                sucursales: []
+                sucursales: [],
+                subCategorias: [],
+                articulos: []
             },
             descripcion: '',
             tiempoEstimadoMinutos: 0,
@@ -109,7 +111,7 @@ export default function SaveArticulo() {
     }
 
     const buscarInsumoXDenominacion = async () => {
-        const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumo/search?denominacion=");
+        const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumos/search?denominacion=");
         const insumosResult = await result.getInsumoByDenominacion(inputValue);
         if (insumosResult) {
             setInsumos(insumosResult);
@@ -119,13 +121,13 @@ export default function SaveArticulo() {
 
     }
     const getAllCategories = async () => {
-        const result = new CatetgoriaService("http://localhost:8080/categoria")
+        const result = new CatetgoriaService("http://localhost:8080/categorias")
         const categoriaResult = await result.getAll();
         setCategoria(categoriaResult);
     }
 
     const getAllUnidad = async () => {
-        const result = new UnidadMedidaService("http://localhost:8080/unidadMedida")
+        const result = new UnidadMedidaService("http://localhost:8080/unidadMedidas")
         const unidadMedidaResult = await result.getAll();
         setUnidadMedida(unidadMedidaResult)
     }
@@ -181,9 +183,9 @@ export default function SaveArticulo() {
     const saveArticulo = async () => {
         //console.log(articuloManufacturado);
         if (Number(id) !== 0) {
-            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").put(Number(id), articuloManufacturado);
+            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturados").put(Number(id), articuloManufacturado);
         } else {
-            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").post(articuloManufacturado);
+            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturados").post(articuloManufacturado);
         }
         alert("Articulo guardado con exito!");
         handleClose();
@@ -205,7 +207,7 @@ export default function SaveArticulo() {
         getAllCategories()
         getAllUnidad()
         if (Number(id) != 0) {
-            getArticuloManufacturado("http://localhost:8080/articuloManufacturado", Number(id))
+            getArticuloManufacturado("http://localhost:8080/articuloManufacturados", Number(id))
 
         }
         // console.log(articuloManufacturado.articuloManufacturadoDetalles)
@@ -220,13 +222,13 @@ export default function SaveArticulo() {
             </Link>
             <form action="" className="formContainer">
                 <label htmlFor="denominacion">Nombre del producto</label>
-                <input type="text" id="denominacion" name="denominacion" defaultValue={articuloManufacturado.denominacion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, denominacion: e.target.value })} />
+                <input type="text" id="denominacion" name="denominacion" value={articuloManufacturado.denominacion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, denominacion: e.target.value })} />
                 <label htmlFor="descripcion">Descripción</label>
-                <textarea id="descripcion" name="descripcion" defaultValue={articuloManufacturado.descripcion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, descripcion: e.target.value })}></textarea>
+                <textarea id="descripcion" name="descripcion" value={articuloManufacturado.descripcion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, descripcion: e.target.value })}></textarea>
                 <label htmlFor="precioVenta">Precio de Venta</label>
-                <input type="text" id="precioVenta" name="precioVenta" defaultValue={Number(articuloManufacturado.precioVenta)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, precioVenta: Number(e.target.value )})} />
+                <input type="text" id="precioVenta" name="precioVenta" value={Number(articuloManufacturado.precioVenta)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, precioVenta: Number(e.target.value )})} />
                 <label htmlFor="tiempoEstimadoMinutos">Tiempo Estimado(minutos)</label>
-                <input type="number" id="tiempoEstimadoMinutos" name="tiempoEstimadoMinutos" defaultValue={Number(articuloManufacturado.tiempoEstimadoMinutos)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, tiempoEstimadoMinutos: Number(e.target.value) })} />
+                <input type="number" id="tiempoEstimadoMinutos" name="tiempoEstimadoMinutos" value={Number(articuloManufacturado.tiempoEstimadoMinutos)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, tiempoEstimadoMinutos: Number(e.target.value) })} />
                 <input type="file" onChange={onFileChange} />
                 <div style={{ display: "flex", justifyContent: "start",gap:"3rem",margin:"1rem 0" }}>
                     <div>

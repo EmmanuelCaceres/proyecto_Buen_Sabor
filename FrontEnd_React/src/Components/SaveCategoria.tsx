@@ -1,42 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
-import IArticuloInsumo from "../Entities/IArticuloInsumo";
 import arrow_left from "../assets/arrow-circle-left-svgrepo-com.svg";
-import ArticuloInsumoService from "../Functions/Services/ArticuloInsumoService";
 import ICategoria from "../Entities/ICategoria";
-import IUnidadMedida from "../Entities/IUnidadMedida";
-import UnidadMedidaService from "../Functions/Services/UnidadMedidaService";
-import ImagenArticuloService from "../Functions/Services/ImagenArticuloService";
 import CategoriaService from "../Functions/Services/CategoriaService";
 
-export default function SaveInsumo() {
+export default function SaveCategoria() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [categoria, setCategoria] = useState<ICategoria[]>([])
-    const [unidadMedida, setUnidadMedida] = useState<IUnidadMedida[]>([]);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const [articuloInsumo, setArticulosInsumo] = useState<IArticuloInsumo>({
+    const [categoria, setCategoria] = useState<ICategoria>({
         id: Number(id),
         denominacion: '',
-        precioVenta: 0,
-        unidadMedida: {
-            id: 0,
-            denominacion: '',
-        },
-        imagenes: [],
-        categoria: {
-            id: 0,
-            denominacion: '',
-            sucursales: [],
-            subCategorias: [],
-            articulos: []
-        },
-        precioCompra: 0,
-        stockActual: 0,
-        stockMaximo: 0,
-        esParaElaborar: true,
+        sucursales: [],
+        subCategorias: [],
+        articulos: []
     });
 
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,39 +29,40 @@ export default function SaveInsumo() {
     
         formData.append("file", file);
         console.log(formData);
+    }
     
-        const result = new ImagenArticuloService("http://localhost:8080/imagenArticulos");
-        result.postImagen(formData)
-            .then(data => {
-                if (data) {
-                    setArticulosInsumo(prevState => ({
-                        ...prevState,
-                        imagenes: [
-                            ...prevState.imagenes,
-                            {
-                                id: data.id,
-                                url: data.url
-                            }
-                        ]
-                    }));
-                } else {
-                    console.log("No data received");
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
+    //     const result = new ImagenArticuloService("http://localhost:8080/imagenArticulos");
+    //     result.postImagen(formData)
+    //         .then(data => {
+    //             if (data) {
+    //                 setArticulosInsumo(prevState => ({
+    //                     ...prevState,
+    //                     imagenes: [
+    //                         ...prevState.imagenes,
+    //                         {
+    //                             id: data.id,
+    //                             url: data.url
+    //                         }
+    //                     ]
+    //                 }));
+    //             } else {
+    //                 console.log("No data received");
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // };
 
-    const getArticuloInsumo = async (baseUrl: string, id: number) => {
-        const result = new ArticuloInsumoService(baseUrl);
+    const getCategoryByDenominacion = async (baseUrl: string, id: number) => {
+        const result = new CategoriaService(baseUrl);
         await result.getById(id)
             .then(data => {
                 if (data !== null) {
-                    setArticulosInsumo(data);
+                    setCategoria(data);
                     console.log("DATA: " + JSON.stringify(data, null, 2));
                 } else {
-                    console.log("El insumo no se encontró.");
+                    console.log("La categoria no se encontró.");
                 }
             })
             .catch(error => {
@@ -90,49 +70,13 @@ export default function SaveInsumo() {
             })
     }
 
-
-    const getAllCategories = async () => {
-        const result = new CategoriaService("http://localhost:8080/categorias")
-        const categoriaResult = await result.getAll();
-        setCategoria(categoriaResult);
-    }
-
-    const getAllUnidad = async () => {
-        const result = new UnidadMedidaService("http://localhost:8080/unidadMedidas")
-        const unidadMedidaResult = await result.getAll();
-        setUnidadMedida(unidadMedidaResult)
-    }
-
-    const handleChangeCategorySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const categoriaSeleccionadaId = parseInt(e.target.value); // Convertir a número
-        const categoriaSeleccionada = categoria.find(c => c.id === categoriaSeleccionadaId);
-        if (categoriaSeleccionada) {
-            setArticulosInsumo(prevState => ({
-                ...prevState, // Mantiene las demás propiedades
-                categoria: categoriaSeleccionada // Actualiza solo la categoría
-            }));
-        }
-    }
-
-
-    const handleChangeUnidadSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const unidadSeleccionadaId = parseInt(e.target.value); // Convertir a número
-        const unidadSeleccionada = unidadMedida.find(c => c.id === unidadSeleccionadaId);
-        if (unidadSeleccionada) {
-            setArticulosInsumo(prevState => ({
-                ...prevState, // Mantiene las demás propiedades
-                unidadMedida: unidadSeleccionada // Actualiza solo la unidad de medida
-            }));
-        }
-    }
-
-    const saveArticulo = async () => {
+    const SaveCategoria = async () => {
         if (Number(id) !== 0) {
-            await new ArticuloInsumoService("http://localhost:8080/articuloInsumos").put(Number(id), articuloInsumo);
+            await new CategoriaService("http://localhost:8080/categorias").put(Number(id), categoria);
         } else {
-            await new ArticuloInsumoService("http://localhost:8080/articuloInsumos").post(articuloInsumo);
+            await new CategoriaService("http://localhost:8080/categorias").post(categoria);
         }
-        alert("Insumo guardado con exito!");
+        alert("Categoria guardada con exito!");
         handleClose();
         navigate(-1);
     };
@@ -145,34 +89,24 @@ export default function SaveInsumo() {
     //     url: imageUrl
     //     });
     // }
-    const handleRadioChange = (e: { target: { value: string; }; }) => {
-        const esParaElaborar = e.target.value === 'true';
-        setArticulosInsumo({ 
-            ...articuloInsumo, 
-            esParaElaborar,
-            precioVenta: esParaElaborar ? 0 : articuloInsumo.precioVenta // Si esParaElaborar es true, precioVenta será 0
-        });
-    };
 
 
     useEffect(() => {
-        getAllCategories()
-        getAllUnidad()
         if (Number(id) !== 0) {
-            getArticuloInsumo("http://localhost:8080/articuloInsumos", Number(id))
+            getCategoryByDenominacion("http://localhost:8080/categorias", Number(id))
         }
     }, [id])
 
     return (
         <div className="container">
-            <Link to="/insumos" className="btnVolver">
+            <Link to="/categorias" className="btnVolver">
                 <img width={24} height={24} src={arrow_left} alt="arrow_left" />
                 <p style={{ margin: "0" }}>Volver</p>
             </Link>
             <form action="" className="formContainer">
-                <label htmlFor="denominacion">Nombre del insumo</label>
-                <input type="text" id="denominacion" name="denominacion" value={articuloInsumo.denominacion} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, denominacion: e.target.value })} />
-                <label htmlFor="precioCompra">Precio de compra </label>
+                <label htmlFor="denominacion">Nombre de la categoria</label>
+                <input type="text" id="denominacion" name="denominacion" value={categoria.denominacion} onChange={(e) => setCategoria({ ...categoria, denominacion: e.target.value })} />
+                {/*<label htmlFor="precioCompra">Precio de compra </label>
                 <input type="number" id="precioCompra" name="precioCompra" value={articuloInsumo.precioCompra} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, precioCompra: Number(e.target.value) })}></input>
                 <label htmlFor="stockActual">Stock actual</label>
                 <input type="text" id="stockActual" name="stockActual" value={Number(articuloInsumo.stockActual)} onChange={(e) => setArticulosInsumo({ ...articuloInsumo, stockActual: Number(e.target.value) })} />
@@ -241,10 +175,11 @@ export default function SaveInsumo() {
                             onChange={(e) => setArticulosInsumo({ ...articuloInsumo, precioVenta: Number(e.target.value) })} 
                         />
                     </>
-                )}
+                )} */}
             </form>
 
-            <button className="btn btn-primary" onClick={saveArticulo}>Guardar</button>
+            <button className="btn btn-primary" onClick={SaveCategoria}>Guardar</button>
         </div>
-    )
+        )
 }
+

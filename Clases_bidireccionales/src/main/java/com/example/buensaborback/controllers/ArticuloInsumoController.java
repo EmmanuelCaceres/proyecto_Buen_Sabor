@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "articuloInsumo")
+@RequestMapping(path = "articuloInsumos")
 public class ArticuloInsumoController {
 
     @Autowired

@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path="imagenArticulo")
+@RequestMapping(path="imagenArticulos")
 public class ImagenArticuloController {
 
     private static String UPLOAD_DIR = "uploads/";

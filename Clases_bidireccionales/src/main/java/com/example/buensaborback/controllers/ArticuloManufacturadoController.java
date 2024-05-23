@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path="articuloManufacturado")
+@RequestMapping(path="articuloManufacturados")
 public class ArticuloManufacturadoController {
     private ArticuloManufacturadoService articuloManufacturadoService;
 

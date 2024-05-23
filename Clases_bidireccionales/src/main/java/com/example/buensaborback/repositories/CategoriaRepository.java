@@ -1,6 +1,5 @@
 package com.example.buensaborback.repositories;
 
-import com.example.buensaborback.domain.entities.ArticuloManufacturado;
 import com.example.buensaborback.domain.entities.Categoria;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

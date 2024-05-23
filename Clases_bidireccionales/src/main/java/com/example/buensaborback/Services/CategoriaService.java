@@ -1,7 +1,5 @@
 package com.example.buensaborback.Services;
 
-import com.example.buensaborback.domain.entities.ArticuloInsumo;
-import com.example.buensaborback.domain.entities.ArticuloManufacturado;
 import com.example.buensaborback.domain.entities.Categoria;
 import com.example.buensaborback.repositories.CategoriaRepository;
 import jakarta.transaction.Transactional;
