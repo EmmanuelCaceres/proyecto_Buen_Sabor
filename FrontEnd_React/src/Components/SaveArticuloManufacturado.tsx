@@ -1,4 +1,4 @@
-import { ReactEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
@@ -9,7 +9,7 @@ import arrow_left from "../assets/arrow-circle-left-svgrepo-com.svg";
 import ArticuloManufacturadoService from "../Functions/Services/ArticuloManufacturadoService";
 import ArticuloInsumoService from "../Functions/Services/ArticuloInsumoService";
 import IArticuloManufacturadoDetalles from "../Entities/IArticuloManufacturadoDetalle";
-import IImagen from "../Entities/IImagenArticulo";
+//import IImagen from "../Entities/IImagenArticulo";
 import ICategoria from "../Entities/ICategoria";
 import CatetgoriaService from "../Functions/Services/CategoriaService";
 import IUnidadMedida from "../Entities/IUnidadMedida";
@@ -21,12 +21,12 @@ export default function SaveArticulo() {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     const [insumos, setInsumos] = useState<IArticuloInsumo[]>([]);
-    const [imgUrl, setImgUrl] = useState<IImagen>(
-        {
-            id: 0,
-            url: ''
-        }
-    );
+    // const [imgUrl, setImgUrl] = useState<IImagen>(
+    //     {
+    //         id: 0,
+    //         url: ''
+    //     }
+    // );
     const [categoria, setCategoria] = useState<ICategoria[]>([])
     const [unidadMedida, setUnidadMedida] = useState<IUnidadMedida[]>([]);
 
@@ -34,29 +34,40 @@ export default function SaveArticulo() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const onFileChange = (event) => {
+    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const formData = new FormData();
-        formData.append("file", event.target.files[0]);
-        console.log(formData)
-
+        const file = event.target.files?.[0];
+    
+        if (!file) {
+            console.log("No file selected");
+            return;
+        }
+    
+        formData.append("file", file);
+        console.log(formData);
+    
         const result = new ImagenArticuloService("http://localhost:8080/imagenArticulo");
         result.postImagen(formData)
-        .then(data => {
-            console.log(data);
-            setArticulosManufacturado(prevState => ({
-                ...prevState,
-                imagenes: [
-                    ...prevState.imagenes,
-                    {
-                        id: data.id,
-                        url: data.url
-                    }
-                ]
-            }));
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(data => {
+                if (data) {
+                    console.log(data);
+                    setArticulosManufacturado(prevState => ({
+                        ...prevState,
+                        imagenes: [
+                            ...prevState.imagenes,
+                            {
+                                id: data.id,
+                                url: data.url
+                            }
+                        ]
+                    }));
+                } else {
+                    console.log("No data received");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     const [articuloManufacturado, setArticulosManufacturado] = useState<IArticuloManufacturado>(
@@ -71,7 +82,8 @@ export default function SaveArticulo() {
             imagenes: [],
             categoria: {
                 id: 0,
-                denominacion: ''
+                denominacion: '',
+                sucursales: []
             },
             descripcion: '',
             tiempoEstimadoMinutos: 0,
@@ -275,7 +287,7 @@ export default function SaveArticulo() {
                                         <p>{detalle.articuloInsumo?.precioVenta}</p>
                                     </td>
                                     <td>
-                                        <button style={{ marginBottom: 10 }} className="btn btn-danger" onClick={(e) => deleteInsumo(detalle.articuloInsumo)}>Eliminar</button>
+                                        <button style={{ marginBottom: 10 }} className="btn btn-danger" onClick={() => deleteInsumo(detalle.articuloInsumo)}>Eliminar</button>
                                     </td>
                                 </tr>
                             ))}
@@ -308,7 +320,7 @@ export default function SaveArticulo() {
                             {articuloManufacturado.articuloManufacturadoDetalles && articuloManufacturado.articuloManufacturadoDetalles.map((detalle) => (
                                 <li key={detalle.articuloInsumo.id}>
                                     {detalle.articuloInsumo?.denominacion}
-                                    <svg onClick={(e) => deleteInsumo(detalle.articuloInsumo)} style={{ position: "absolute", top: "3px", right: "1px" }} width="14px" height="14px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg onClick={() => deleteInsumo(detalle.articuloInsumo)} style={{ position: "absolute", top: "3px", right: "1px" }} width="14px" height="14px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7 17L16.8995 7.10051" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path>
                                         <path d="M7 7.00001L16.8995 16.8995" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path>
                                     </svg>
