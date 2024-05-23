@@ -28,10 +28,9 @@ public class ArticuloInsumoController {
         }
     }
 
-
-    public ArticuloInsumoController(ArticuloManufacturadoService articuloManufacturadoService){
+    /*public ArticuloInsumoController(ArticuloManufacturadoService articuloManufacturadoService){
         this.articuloInsumoService = articuloInsumoService;
-    }
+    }*/
 
     @GetMapping("")
     public ResponseEntity<?> getAll(){

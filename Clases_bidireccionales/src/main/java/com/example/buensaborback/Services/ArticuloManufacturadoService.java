@@ -78,6 +78,7 @@ public class ArticuloManufacturadoService implements BaseService<ArticuloManufac
         }
     }
 
+    @Transactional
     public List<ArticuloManufacturado> getbyName(String nombre) throws Exception {
         try{
             List<ArticuloManufacturado> entities;
