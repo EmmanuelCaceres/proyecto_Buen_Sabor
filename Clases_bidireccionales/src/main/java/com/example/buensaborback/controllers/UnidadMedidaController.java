@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "unidadMedida")
+@RequestMapping(path = "unidadMedidas")
 public class UnidadMedidaController {
     @Autowired
     public UnidadMedidaService unidadMedidaService;

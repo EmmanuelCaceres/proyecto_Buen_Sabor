@@ -20,7 +20,7 @@ export default function GrillaArticulo() {
             })
     }
     const searchItem = (value: string) => {
-        const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumo/name?nombre=");
+        const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumos/name?nombre=");
         result.getInsumoByDenominacion(value)
             .then(data => {
                 // Verifica si 'data' es 'null' y proporciona un array vacío en su lugar
@@ -40,7 +40,7 @@ export default function GrillaArticulo() {
 
     const handleDelete = (id:number) => {
         console.log(event);
-        const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumo").delete(id);
+        const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumos").delete(id);
         window.location.reload;
     }
 
@@ -49,7 +49,7 @@ export default function GrillaArticulo() {
     };
 
     useEffect(() => {
-        mostrarDatos("http://localhost:8080/articuloInsumo")
+        mostrarDatos("http://localhost:8080/articuloInsumos")
     }, ([]))
 
     return (
@@ -83,7 +83,7 @@ export default function GrillaArticulo() {
                     {articulosInsumos.map((insumo: IArticuloInsumo) => (
                         <tr key={insumo.id}>
                             <td>
-                                <img width={64} height={64} src={'http://localhost:8080/imagenArticulo/uploads/' + insumo.imagenes[0].url} alt="imagenArticulo" />
+                                <img width={50} height={50} src={'http://localhost:8080/imagenArticulos/uploads/' + insumo.imagenes[0].url} alt="imagenArticulo" />
                             </td>
                             <td>{insumo.denominacion}</td>
                             <td>{insumo.categoria.denominacion}</td>

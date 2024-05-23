@@ -20,7 +20,7 @@ export default function GrillaArticulo() {
             })
     }
     const searchItem = (value: string) => {
-        const result = new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado/name?nombre=");
+        const result = new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturados/name?nombre=");
         result.getArticuloByName(value)
             .then(data => {
                 // Verifica si 'data' es 'null' y proporciona un array vacío en su lugar
@@ -40,7 +40,7 @@ export default function GrillaArticulo() {
 
     const handleDelete = (id:number) => {
         //console.log(event);
-        const result = new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").delete(id);
+        const result = new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturados").delete(id);
         alert("Articulo removido con éxito!")
         window.location.reload;
     }
@@ -50,7 +50,7 @@ export default function GrillaArticulo() {
     };
 
     useEffect(() => {
-        mostrarDatos("http://localhost:8080/articuloManufacturado")
+        mostrarDatos("http://localhost:8080/articuloManufacturados")
     }, ([]))
 
     return (
@@ -90,13 +90,13 @@ export default function GrillaArticulo() {
                     {articulosManufacturados.map((articulo: IArticuloManufacturado) => (
                         <tr key={articulo.id}>
                             <td>
-                                <img width={64} height={64} src={'http://localhost:8080/imagenArticulo/uploads/' + articulo.imagenes[0].url} alt="imagenArticulo" />
+                                <img width={64} height={64} src={'http://localhost:8080/imagenArticulos/uploads/' + articulo.imagenes[0].url} alt="imagenArticulo" />
                             </td>
                             <td>{articulo.denominacion}</td>
                             <td>{articulo.descripcion}</td>
                             <td>{articulo.precioVenta}</td>
                             <td>
-                                <Link to={"articulos/save/" + articulo.id} className="btn btn-warning me-2">
+                                <Link to={"save/" + articulo.id} className="btn btn-warning me-2">
                                     Editar
                                 </Link>
                                 <Button variant="danger" onClick={() => handleDelete(articulo.id)}>
