@@ -41,7 +41,7 @@ export default function SideBar() {
                             </Link>
                         </CNavItem>
                         <CNavItem>
-                            <Link to="/articulos/categorias" className="nav-link">
+                            <Link to="/categorias" className="nav-link">
                                 <span className="nav-icon"><span className="nav-icon-bullet"></span></span>
                                 Categorías
                             </Link>

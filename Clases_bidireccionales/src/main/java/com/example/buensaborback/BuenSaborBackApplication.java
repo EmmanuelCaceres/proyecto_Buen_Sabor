@@ -172,34 +172,34 @@ public class BuenSaborBackApplication {
 
 
 
-//			// crear fotos para cada insumo
-//			ImagenArticulo imagenArticuloCoca = ImagenArticulo.builder().
-//					url("https://m.media-amazon.com/images/I/51v8nyxSOYL._SL1500_.jpg").
-//					build();
-//			ImagenArticulo imagenArticuloHarina = ImagenArticulo.builder().url("https://mandolina.co/wp-content/uploads/2023/03/648366622-1024x683.jpg").build();
-//			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().url("https://superdepaso.com.ar/wp-content/uploads/2021/06/SANTAROSA-PATEGRAS-04.jpg").build();
-//			ImagenArticulo imagenArticuloTomate = ImagenArticulo.builder().url("https://thefoodtech.com/wp-content/uploads/2020/06/Componentes-de-calidad-en-el-tomate-828x548.jpg").build();
-//
-//			imagenArticuloRepository.save(imagenArticuloCoca);
-//			imagenArticuloRepository.save(imagenArticuloHarina);
-//			imagenArticuloRepository.save(imagenArticuloQueso);
-//			imagenArticuloRepository.save(imagenArticuloTomate);
-//
-//			//ASOCIAMOS IMAGEN CON INSUMOS
-//			cocaCola.getImagenes().add(imagenArticuloCoca);
-//			harina.getImagenes().add(imagenArticuloHarina);
-//			queso.getImagenes().add(imagenArticuloQueso);
-//			tomate.getImagenes().add(imagenArticuloTomate);
-//
-//			articuloInsumoRepository.save(cocaCola);
-//			articuloInsumoRepository.save(harina);
-//			articuloInsumoRepository.save(queso);
-//			articuloInsumoRepository.save(tomate);
+			// crear fotos para cada insumo
+			ImagenArticulo imagenArticuloCoca = ImagenArticulo.builder().
+					url("https://m.media-amazon.com/images/I/51v8nyxSOYL._SL1500_.jpg").
+					build();
+			ImagenArticulo imagenArticuloHarina = ImagenArticulo.builder().url("https://mandolina.co/wp-content/uploads/2023/03/648366622-1024x683.jpg").build();
+			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().url("https://superdepaso.com.ar/wp-content/uploads/2021/06/SANTAROSA-PATEGRAS-04.jpg").build();
+			ImagenArticulo imagenArticuloTomate = ImagenArticulo.builder().url("https://thefoodtech.com/wp-content/uploads/2020/06/Componentes-de-calidad-en-el-tomate-828x548.jpg").build();
+
+			imagenArticuloRepository.save(imagenArticuloCoca);
+			imagenArticuloRepository.save(imagenArticuloHarina);
+			imagenArticuloRepository.save(imagenArticuloQueso);
+			imagenArticuloRepository.save(imagenArticuloTomate);
+
+			//ASOCIAMOS IMAGEN CON INSUMOS
+			cocaCola.getImagenes().add(imagenArticuloCoca);
+			harina.getImagenes().add(imagenArticuloHarina);
+			queso.getImagenes().add(imagenArticuloQueso);
+			tomate.getImagenes().add(imagenArticuloTomate);
+
+			articuloInsumoRepository.save(cocaCola);
+			articuloInsumoRepository.save(harina);
+			articuloInsumoRepository.save(queso);
+			articuloInsumoRepository.save(tomate);
 
 
 			logger.info("Hasta aca llego");
-//
-//
+
+
 
 			harina.setCategoria(categoriaInsumos);
 			queso.setCategoria(categoriaInsumos);
@@ -228,7 +228,12 @@ public class BuenSaborBackApplication {
 					tiempoEstimadoMinutos(15).
 					preparacion("Pasos de preparacion de una muzza de toda la vida").
 					build();
-			ArticuloManufacturado pizzaNapolitana = ArticuloManufacturado.builder().denominacion("Pizza Napolitana").descripcion("Una pizza clasica").precioVenta(150.0).tiempoEstimadoMinutos(15).preparacion("Pasos de preparacion de una pizza napolitana italiana").build();
+			ArticuloManufacturado pizzaNapolitana = ArticuloManufacturado.builder().
+					denominacion("Pizza Napolitana").descripcion("Una pizza clasica").
+					precioVenta(150.0).
+					tiempoEstimadoMinutos(15).
+					preparacion("Pasos de preparacion de una pizza napolitana italiana").
+					build();
 
 			articuloManufacturadoRepository.save(pizzaMuzarella);
 			articuloManufacturadoRepository.save(pizzaNapolitana);
@@ -237,15 +242,23 @@ public class BuenSaborBackApplication {
 			ImagenArticulo imagenArticuloPizzaMuzarella = ImagenArticulo.builder().
 					url("https://storage.googleapis.com/fitia-api-bucket/media/images/recipe_images/1002846.jpg").
 					build();
-			ImagenArticulo imagenArticuloPizzaNapolitana = ImagenArticulo.builder().url("https://assets.elgourmet.com/wp-content/uploads/2023/03/8metlvp345_portada-pizza-1024x686.jpg.webp").build();
+			ImagenArticulo imagenArticuloPizzaNapolitana = ImagenArticulo.builder().
+					url("https://assets.elgourmet.com/wp-content/uploads/2023/03/8metlvp345_portada-pizza-1024x686.jpg.webp").
+					build();
+//			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().
+//					url("https://cdn2.cocinadelirante.com/sites/default/files/images/2023/09/como-hacer-queso-con-1-litro-de-leche.jpg").
+//					build();
+
 			imagenArticuloRepository.save(imagenArticuloPizzaMuzarella);
 			imagenArticuloRepository.save(imagenArticuloPizzaNapolitana);
+			//imagenArticuloRepository.save(imagenArticuloQueso);
 
 
 
 			//ASOCIAMOS IMAGEN CON ARTICULO MANUFACTURADO
 			pizzaMuzarella.getImagenes().add(imagenArticuloPizzaMuzarella);
 			pizzaNapolitana.getImagenes().add(imagenArticuloPizzaNapolitana);
+			//queso.getImagenes().add(imagenArticuloQueso);
 
 			pizzaMuzarella.setUnidadMedida(unidadMedidaPorciones);
 			pizzaNapolitana.setUnidadMedida(unidadMedidaPorciones);
@@ -255,7 +268,7 @@ public class BuenSaborBackApplication {
 
 			articuloManufacturadoRepository.save(pizzaMuzarella);
 			articuloManufacturadoRepository.save(pizzaNapolitana);
-
+			//articuloInsumoRepository.save(queso);
 
 
 

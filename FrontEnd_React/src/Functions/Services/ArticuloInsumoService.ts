@@ -11,4 +11,5 @@ export default class ArticuloInsumoService extends GenericFetch<IArticuloInsumo>
         const data = await response.json();
         return data as IArticuloInsumo[];
     }
+
 }

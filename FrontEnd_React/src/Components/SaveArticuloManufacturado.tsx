@@ -1,4 +1,4 @@
-import { ReactEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams,useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
@@ -9,7 +9,7 @@ import arrow_left from "../assets/arrow-circle-left-svgrepo-com.svg";
 import ArticuloManufacturadoService from "../Functions/Services/ArticuloManufacturadoService";
 import ArticuloInsumoService from "../Functions/Services/ArticuloInsumoService";
 import IArticuloManufacturadoDetalles from "../Entities/IArticuloManufacturadoDetalle";
-import IImagen from "../Entities/IImagenArticulo";
+//import IImagen from "../Entities/IImagenArticulo";
 import ICategoria from "../Entities/ICategoria";
 import CatetgoriaService from "../Functions/Services/CategoriaService";
 import IUnidadMedida from "../Entities/IUnidadMedida";
@@ -21,6 +21,12 @@ export default function SaveArticulo() {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     const [insumos, setInsumos] = useState<IArticuloInsumo[]>([]);
+    const [imgUrl, setImgUrl] = useState<IImagen>(
+        {
+            id: 0,
+            url: ''
+        }
+    );
     const [categoria, setCategoria] = useState<ICategoria[]>([])
     const [unidadMedida, setUnidadMedida] = useState<IUnidadMedida[]>([]);
 
@@ -28,36 +34,47 @@ export default function SaveArticulo() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const onFileChange = (event) => {
+    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const formData = new FormData();
-        formData.append("file", event.target.files[0]);
-        console.log(formData)
-
-        const result = new ImagenArticuloService("http://localhost:8080/imagenArticulo");
+        const file = event.target.files?.[0];
+    
+        if (!file) {
+            console.log("No file selected");
+            return;
+        }
+    
+        formData.append("file", file);
+        console.log(formData);
+    
+        const result = new ImagenArticuloService("http://localhost:8080/imagenArticulos");
         result.postImagen(formData)
-        .then(data => {
-            console.log(data);
-            setArticulosManufacturado(prevState => ({
-                ...prevState,
-                imagenes: [
-                    ...prevState.imagenes,
-                    {
-                        id: data.id,
-                        url: data.url
-                    }
-                ]
-            }));
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(data => {
+                if (data) {
+                    //console.log(data);
+                    setArticulosManufacturado(prevState => ({
+                        ...prevState,
+                        imagenes: [
+                            ...prevState.imagenes,
+                            {
+                                id: data.id,
+                                url: data.url
+                            }
+                        ]
+                    }));
+                } else {
+                    console.log("No data received");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     const [articuloManufacturado, setArticulosManufacturado] = useState<IArticuloManufacturado>(
         {
             id: Number(id),
             denominacion: '',
-            precioVenta: '',
+            precioVenta: 0,
             unidadMedida: {
                 id: 0,
                 denominacion: '',
@@ -65,7 +82,10 @@ export default function SaveArticulo() {
             imagenes: [],
             categoria: {
                 id: 0,
-                denominacion: ''
+                denominacion: '',
+                sucursales: [],
+                subCategorias: [],
+                articulos: []
             },
             descripcion: '',
             tiempoEstimadoMinutos: 0,
@@ -80,6 +100,7 @@ export default function SaveArticulo() {
             .then(data => {
                 if (data !== null) {
                     setArticulosManufacturado(data);
+                    console.log("DATAA"+ JSON.stringify(data))
                 } else {
                     console.log("El artículo manufacturado no se encontró.");
                 }
@@ -90,7 +111,7 @@ export default function SaveArticulo() {
     }
 
     const buscarInsumoXDenominacion = async () => {
-        const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumo/search?denominacion=");
+        const result = new ArticuloInsumoService("http://localhost:8080/articuloInsumos/search?denominacion=");
         const insumosResult = await result.getInsumoByDenominacion(inputValue);
         if (insumosResult) {
             setInsumos(insumosResult);
@@ -100,13 +121,13 @@ export default function SaveArticulo() {
 
     }
     const getAllCategories = async () => {
-        const result = new CatetgoriaService("http://localhost:8080/categoria")
+        const result = new CatetgoriaService("http://localhost:8080/categorias")
         const categoriaResult = await result.getAll();
         setCategoria(categoriaResult);
     }
 
     const getAllUnidad = async () => {
-        const result = new UnidadMedidaService("http://localhost:8080/unidadMedida")
+        const result = new UnidadMedidaService("http://localhost:8080/unidadMedidas")
         const unidadMedidaResult = await result.getAll();
         setUnidadMedida(unidadMedidaResult)
     }
@@ -160,11 +181,11 @@ export default function SaveArticulo() {
     }
 
     const saveArticulo = async () => {
-        console.log(articuloManufacturado);
+        //console.log(articuloManufacturado);
         if (Number(id) !== 0) {
-            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").put(Number(id), articuloManufacturado);
+            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturados").put(Number(id), articuloManufacturado);
         } else {
-            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturado").post(articuloManufacturado);
+            await new ArticuloManufacturadoService("http://localhost:8080/articuloManufacturados").post(articuloManufacturado);
         }
         alert("Articulo guardado con exito!");
         handleClose();
@@ -182,15 +203,15 @@ export default function SaveArticulo() {
 
 
     useEffect(() => {
-        console.log(id)
+        //console.log(id)
         getAllCategories()
         getAllUnidad()
         if (Number(id) != 0) {
-            getArticuloManufacturado("http://localhost:8080/articuloManufacturado", Number(id))
+            getArticuloManufacturado("http://localhost:8080/articuloManufacturados", Number(id))
 
         }
         // console.log(articuloManufacturado.articuloManufacturadoDetalles)
-        console.log(categoria)
+        //console.log(categoria)
     }, ([]))
 
     return (
@@ -201,13 +222,13 @@ export default function SaveArticulo() {
             </Link>
             <form action="" className="formContainer">
                 <label htmlFor="denominacion">Nombre del producto</label>
-                <input type="text" id="denominacion" name="denominacion" defaultValue={articuloManufacturado.denominacion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, denominacion: e.target.value })} />
+                <input type="text" id="denominacion" name="denominacion" value={articuloManufacturado.denominacion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, denominacion: e.target.value })} />
                 <label htmlFor="descripcion">Descripción</label>
-                <textarea id="descripcion" name="descripcion" defaultValue={articuloManufacturado.descripcion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, descripcion: e.target.value })}></textarea>
+                <textarea id="descripcion" name="descripcion" value={articuloManufacturado.descripcion} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, descripcion: e.target.value })}></textarea>
                 <label htmlFor="precioVenta">Precio de Venta</label>
-                <input type="text" id="precioVenta" name="precioVenta" defaultValue={articuloManufacturado.precioVenta} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, precioVenta: e.target.value })} />
+                <input type="text" id="precioVenta" name="precioVenta" value={Number(articuloManufacturado.precioVenta)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, precioVenta: Number(e.target.value )})} />
                 <label htmlFor="tiempoEstimadoMinutos">Tiempo Estimado(minutos)</label>
-                <input type="number" id="tiempoEstimadoMinutos" name="tiempoEstimadoMinutos" defaultValue={Number(articuloManufacturado.tiempoEstimadoMinutos)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, tiempoEstimadoMinutos: Number(e.target.value) })} />
+                <input type="number" id="tiempoEstimadoMinutos" name="tiempoEstimadoMinutos" value={Number(articuloManufacturado.tiempoEstimadoMinutos)} onChange={(e) => setArticulosManufacturado({ ...articuloManufacturado, tiempoEstimadoMinutos: Number(e.target.value) })} />
                 <input type="file" onChange={onFileChange} />
                 <div style={{ display: "flex", justifyContent: "start",gap:"3rem",margin:"1rem 0" }}>
                     <div>
@@ -269,7 +290,7 @@ export default function SaveArticulo() {
                                         <p>{detalle.articuloInsumo?.precioVenta}</p>
                                     </td>
                                     <td>
-                                        <button style={{ marginBottom: 10 }} className="btn btn-danger" onClick={(e) => deleteInsumo(detalle.articuloInsumo)}>Eliminar</button>
+                                        <button style={{ marginBottom: 10 }} className="btn btn-danger" onClick={() => deleteInsumo(detalle.articuloInsumo)}>Eliminar</button>
                                     </td>
                                 </tr>
                             ))}
@@ -302,7 +323,7 @@ export default function SaveArticulo() {
                             {articuloManufacturado.articuloManufacturadoDetalles && articuloManufacturado.articuloManufacturadoDetalles.map((detalle) => (
                                 <li key={detalle.articuloInsumo.id}>
                                     {detalle.articuloInsumo?.denominacion}
-                                    <svg onClick={(e) => deleteInsumo(detalle.articuloInsumo)} style={{ position: "absolute", top: "3px", right: "1px" }} width="14px" height="14px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg onClick={() => deleteInsumo(detalle.articuloInsumo)} style={{ position: "absolute", top: "3px", right: "1px" }} width="14px" height="14px" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7 17L16.8995 7.10051" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path>
                                         <path d="M7 7.00001L16.8995 16.8995" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"></path>
                                     </svg>
