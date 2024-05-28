@@ -21,12 +21,6 @@ export default function SaveArticulo() {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState('');
     const [insumos, setInsumos] = useState<IArticuloInsumo[]>([]);
-    const [imgUrl, setImgUrl] = useState<IImagen>(
-        {
-            id: 0,
-            url: ''
-        }
-    );
     const [categoria, setCategoria] = useState<ICategoria[]>([])
     const [unidadMedida, setUnidadMedida] = useState<IUnidadMedida[]>([]);
 

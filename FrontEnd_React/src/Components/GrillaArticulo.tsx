@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ArticuloManufacturadoService from '../Functions/Services/ArticuloManufacturadoService';
 import IArticuloManufacturado from '../Entities/IArticuloManufacturado';
 import masObject from '../assets/circle-plus-svgrepo-com.svg';
+
 export default function GrillaArticulo() {
     const [inputValue, setInputValue] = useState('');
 
@@ -69,7 +70,7 @@ export default function GrillaArticulo() {
                 articulosManufacturados.map((articulo: IArticuloManufacturado) => {
                     return (
                         <div className="itemGrilla" key={articulo.id}>
-                            <img width={64} height={64} src={'http://localhost:8080/imagenArticulo/uploads/'+ articulo.imagenes[0].url} alt="imagenArticulo" />
+                            <img width={58} height={58} src={'http://localhost:8080/imagenArticulo/uploads/'+ articulo.imagenes[0].url} alt="" />
                             <p>{articulo.denominacion}</p>
                             <p>{articulo.descripcion}</p>
                             <div>{articulo.precioVenta}</div>
@@ -96,35 +97,3 @@ export default function GrillaArticulo() {
         </div>
     )
 }
-
-{/* <div id="country_code" class="w-1/4">
-                                  <select id="select_country_code"  name="country_code" class="hidden" value="+54">
-                                    <option value="+54">{{__('forms.area_code.Argentina') }} </option>
-                                    <option value="+591">{{__('forms.area_code.Bolivia') }} </option>
-                                    <option value="+55">{{__('forms.area_code.Brasil') }} </option>
-                                    <option value="+56">{{__('forms.area_code.Chile') }}  </option>
-                                    <option value="+57">{{__('forms.area_code.Colombia') }} </option>
-                                    <option value="+506">{{__('forms.area_code.Costa_Rica') }} </option>
-                                    <option value="+53">{{__('forms.area_code.Cuba') }} </option>
-                                    <option value="+593">{{__('forms.area_code.Ecuador') }} </option>
-                                    <option value="+503">{{__('forms.area_code.El_Salvador') }} </option>
-                                    <option value="+502">{{__('forms.area_code.Guatemala') }} </option>
-                                    <option value="+504">{{__('forms.area_code.Honduras') }} </option>
-                                    <option value="+52">{{__('forms.area_code.Mexico') }} </option>
-                                    <option value="+505">{{__('forms.area_code.Nicaragua') }} </option>
-                                    <option value="+507">{{__('forms.area_code.Panama') }} </option>
-                                    <option value="+595">{{__('forms.area_code.Paraguay') }} </option>
-                                    <option value="+51">{{__('forms.area_code.Peru') }} </option>
-                                    <option value="+1">{{__('forms.area_code.Puerto_Rico') }} </option>
-                                    <option value="+1">{{__('forms.area_code.Republica_Dominicana') }} </option>
-                                    <option value="+598">{{__('forms.area_code.Uruguay') }} </option>
-                                    <option value="+58">{{__('forms.area_code.Venezuela') }}</option>
-                                  </select>
-                                  <div class=" relative select-form form-input-select">
-                                    +54
-                                  </div>
-                                  <div class="find_country h-fit bg-white px-2 pt-4 absolute rounded-[10px] list-shadow" style="width: 217px">
-                                    <ul class="select-options-country w-full pr-4 pl-2 relative border-0">
-                                    </ul>
-                                  </div>
-                                </div> */}
