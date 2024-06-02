@@ -1,5 +1,7 @@
 package com.example.buensaborback.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,17 +23,19 @@ public class Domicilio extends Base{
     private Integer piso;
     private Integer nroDpto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "localidad_id")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "id_localidad")
     private Localidad localidad;
 
     @ManyToMany(mappedBy = "domicilios")
     //SE AGREGA EL BUILDER.DEFAULT PARA QUE BUILDER NO SOBREESCRIBA LA INICIALIZACION DE LA LISTA
     @Builder.Default
+    @JsonIgnore
     private Set<Cliente> clientes = new HashSet<>();
 
     @OneToMany(mappedBy = "domicilio",fetch = FetchType.LAZY)
     @Builder.Default
+    @JsonIgnore
     private Set<Pedido> pedidos = new HashSet<>();
 
 }

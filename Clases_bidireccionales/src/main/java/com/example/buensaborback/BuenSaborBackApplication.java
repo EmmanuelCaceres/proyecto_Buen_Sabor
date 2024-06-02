@@ -93,181 +93,321 @@ public class BuenSaborBackApplication {
 		return args -> {
 			logger.info("----------------ESTOY----FUNCIONANDO---------------------");
 
+			// Etapa del dashboard
+			// Crear 1 pais
+			// Crear 2 provincias para ese pais
+			// crear 2 localidades para cada provincia
+			Pais pais1 = Pais.builder().nombre("Argentina").build();
 
-			Categoria categoriaBebidas = Categoria.builder().denominacion("Bebidas").
-					build();
-			categoriaRepository.save(categoriaBebidas);
-
-			Categoria categoriaGaseosas = Categoria.builder().denominacion("Gaseosas").
-					build();
-			categoriaRepository.save(categoriaGaseosas);
-
-			Categoria categoriaTragos = Categoria.builder().denominacion("Tragos").
-					build();
-			categoriaRepository.save(categoriaTragos);
-
-			Categoria categoriaPizzas = Categoria.builder().denominacion("Pizzas").
-					build();
-
-			Categoria categoriaInsumos = Categoria.builder().denominacion("Insumos").
-					build();
-
-			// Grabo la categoria de insumos y de Manufacturados
-			categoriaRepository.save(categoriaPizzas);
-			categoriaRepository.save(categoriaInsumos);
-			// Asigno subCategorias
-
-			categoriaBebidas.getSubCategorias().add(categoriaGaseosas);
-			categoriaBebidas.getSubCategorias().add(categoriaTragos);
-			// Grabo las Subcategorias
-			categoriaRepository.save(categoriaBebidas);
-
-			// Crear Unidades de medida
-			UnidadMedida unidadMedidaLitros = UnidadMedida.builder().denominacion("Litros").build();
-			UnidadMedida unidadMedidaGramos = UnidadMedida.builder().denominacion("Gramos").build();
-			UnidadMedida unidadMedidaCantidad = UnidadMedida.builder().denominacion("Cantidad").build();
-			UnidadMedida unidadMedidaPorciones = UnidadMedida.builder().denominacion("Porciones").build();
-			unidadMedidaRepository.save(unidadMedidaLitros);
-			unidadMedidaRepository.save(unidadMedidaGramos);
-			unidadMedidaRepository.save(unidadMedidaCantidad);
-			unidadMedidaRepository.save(unidadMedidaPorciones);
-
-			// Crear Insumos , coca cola , harina , etc
-			ArticuloInsumo cocaCola = ArticuloInsumo.builder().
-					denominacion("Coca cola").
-					esParaElaborar(false).
-					stockActual(5).
-					stockMaximo(50).
-					precioCompra(50.0).
-					precioVenta(70.0).
-					build();
-			ArticuloInsumo harina = ArticuloInsumo.builder().denominacion("Harina").esParaElaborar(true).stockActual(4).stockMaximo(40).precioCompra(40.0).precioVenta(60.5).build();
-			ArticuloInsumo queso = ArticuloInsumo.builder().denominacion("Queso").esParaElaborar(true).stockActual(20).stockMaximo(50).precioCompra(23.6).precioVenta(66.6).build();
-			ArticuloInsumo tomate = ArticuloInsumo.builder().denominacion("Tomate").esParaElaborar(true).stockActual(20).stockMaximo(50).precioCompra(23.6).precioVenta(66.6).build();
-			// Grabamos los Articulos
-			articuloInsumoRepository.save(cocaCola);
-			articuloInsumoRepository.save(harina);
-			articuloInsumoRepository.save(queso);
-			articuloInsumoRepository.save(tomate);
-
-			cocaCola.setUnidadMedida(unidadMedidaLitros);
-			harina.setUnidadMedida(unidadMedidaGramos);
-			queso.setUnidadMedida(unidadMedidaGramos);
-			tomate.setUnidadMedida(unidadMedidaCantidad);
-
-			articuloInsumoRepository.save(cocaCola);
-			articuloInsumoRepository.save(harina);
-			articuloInsumoRepository.save(queso);
-			articuloInsumoRepository.save(tomate);
-
-			unidadMedidaLitros.getArticulos().add(cocaCola);
-			unidadMedidaGramos.getArticulos().add(harina);
-			unidadMedidaGramos.getArticulos().add(queso);
-			unidadMedidaCantidad.getArticulos().add(tomate);
-
-			unidadMedidaRepository.save(unidadMedidaLitros);
-			unidadMedidaRepository.save(unidadMedidaGramos);
-			unidadMedidaRepository.save(unidadMedidaCantidad);
-			unidadMedidaRepository.save(unidadMedidaPorciones);
+			//CREACION DE PROVINCIAS
+			Provincia provincia1 = Provincia.builder().nombre("Mendoza").pais(pais1).build();
+			Provincia provincia2 = Provincia.builder().nombre("Buenos Aires").pais(pais1).build();
 
 
-
-			// crear fotos para cada insumo
-			ImagenArticulo imagenArticuloCoca = ImagenArticulo.builder().
-					url("https://m.media-amazon.com/images/I/51v8nyxSOYL._SL1500_.jpg").
-					build();
-			ImagenArticulo imagenArticuloHarina = ImagenArticulo.builder().url("https://mandolina.co/wp-content/uploads/2023/03/648366622-1024x683.jpg").build();
-			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().url("https://superdepaso.com.ar/wp-content/uploads/2021/06/SANTAROSA-PATEGRAS-04.jpg").build();
-			ImagenArticulo imagenArticuloTomate = ImagenArticulo.builder().url("https://thefoodtech.com/wp-content/uploads/2020/06/Componentes-de-calidad-en-el-tomate-828x548.jpg").build();
-
-			imagenArticuloRepository.save(imagenArticuloCoca);
-			imagenArticuloRepository.save(imagenArticuloHarina);
-			imagenArticuloRepository.save(imagenArticuloQueso);
-			imagenArticuloRepository.save(imagenArticuloTomate);
-
-			//ASOCIAMOS IMAGEN CON INSUMOS
-			cocaCola.getImagenes().add(imagenArticuloCoca);
-			harina.getImagenes().add(imagenArticuloHarina);
-			queso.getImagenes().add(imagenArticuloQueso);
-			tomate.getImagenes().add(imagenArticuloTomate);
-
-			articuloInsumoRepository.save(cocaCola);
-			articuloInsumoRepository.save(harina);
-			articuloInsumoRepository.save(queso);
-			articuloInsumoRepository.save(tomate);
+			pais1.getProvincias().add(provincia1);
+			pais1.getProvincias().add(provincia2);
+//			paisRepository.save(pais1);
 
 
-			logger.info("Hasta aca llego");
+			//CREACION DE LOCALIDADES
+			Localidad localidad1 = Localidad.builder().nombre("Lujan de Cuyo").provincia(provincia1).build();
+			Localidad localidad2 = Localidad.builder().nombre("Guaymallen").provincia(provincia1).build();
+			Localidad localidad3 = Localidad.builder().nombre("Mar del Plata").provincia(provincia2).build();
+			Localidad localidad4 = Localidad.builder().nombre("Mar de las Pampas").provincia(provincia2).build();
+
+//			localidadRepository.save(localidad1);
+//			localidadRepository.save(localidad2);
+//			localidadRepository.save(localidad3);
+//			localidadRepository.save(localidad4);
+
+			provincia1.getLocalidades().add(localidad1);
+			provincia1.getLocalidades().add(localidad2);
+			provincia2.getLocalidades().add(localidad3);
+			provincia2.getLocalidades().add(localidad4);
+
+//			provinciaRepository.save(provincia1);
+//			provinciaRepository.save(provincia2);
+
+			// Crear 1 empresa, 2 sucursales para esa empresa y los Domicilios para esas sucursales
+
+			Empresa empresaCarlos = Empresa.builder().nombre("Lo de Carlos").cuil(30546780l).razonSocial("Venta de Alimentos").build();
+//			empresaRepository.save(empresaCarlos);
 
 
+			Domicilio domicilioBerutti = Domicilio.builder().cp(5519).calle("Berutti").numero(2684).piso(0).nroDpto(5).
+					localidad(localidad1).build();
 
-			harina.setCategoria(categoriaInsumos);
-			queso.setCategoria(categoriaInsumos);
-			tomate.setCategoria(categoriaInsumos);
-			cocaCola.setCategoria(categoriaBebidas);
+			Domicilio domicilioGaboto = Domicilio.builder().cp(7600).calle("Gaboto").numero(3475).
+					localidad(localidad2).build();
 
-			articuloInsumoRepository.save(harina);
-			articuloInsumoRepository.save(queso);
-			articuloInsumoRepository.save(tomate);
-			articuloInsumoRepository.save(cocaCola);
-
-
-//			//ASOCIAMOS CATEGORIA CON INSUMOS
-			categoriaInsumos.getArticulos().add(harina);
-			categoriaInsumos.getArticulos().add(queso);
-			categoriaInsumos.getArticulos().add(tomate);
-			categoriaGaseosas.getArticulos().add(cocaCola);
-			categoriaRepository.save(categoriaInsumos);
-			categoriaRepository.save(categoriaGaseosas);
-
-//			// Crear Articulos Manufacturados
-			ArticuloManufacturado pizzaMuzarella = ArticuloManufacturado.builder().
-					denominacion("Pizza Muzarella").
-					descripcion("Una pizza clasica").
-					precioVenta(130.0).
-					tiempoEstimadoMinutos(15).
-					preparacion("Pasos de preparacion de una muzza de toda la vida").
-					build();
-			ArticuloManufacturado pizzaNapolitana = ArticuloManufacturado.builder().
-					denominacion("Pizza Napolitana").descripcion("Una pizza clasica").
-					precioVenta(150.0).
-					tiempoEstimadoMinutos(15).
-					preparacion("Pasos de preparacion de una pizza napolitana italiana").
+			Sucursal sucursalGuaymallen = Sucursal.builder().
+					nombre("En Guaymallen").domicilio(domicilioGaboto).horarioApertura(LocalTime.of(17,0)).
+					horarioCierre(LocalTime.of(23,0)).
 					build();
 
-			articuloManufacturadoRepository.save(pizzaMuzarella);
-			articuloManufacturadoRepository.save(pizzaNapolitana);
+			Sucursal sucursalMarDelPlata = Sucursal.builder().nombre("En MDQ").
+					horarioApertura(LocalTime.of(16,0)).domicilio(domicilioBerutti).
+					horarioCierre(LocalTime.of(23,30)).build();
+			//ASOCIAMOS LOS DOMICILIOS A SUCURSAL
 
-			// Crear fotos para los articulos manufacturados
-			ImagenArticulo imagenArticuloPizzaMuzarella = ImagenArticulo.builder().
-					url("https://storage.googleapis.com/fitia-api-bucket/media/images/recipe_images/1002846.jpg").
-					build();
-			ImagenArticulo imagenArticuloPizzaNapolitana = ImagenArticulo.builder().
-					url("https://assets.elgourmet.com/wp-content/uploads/2023/03/8metlvp345_portada-pizza-1024x686.jpg.webp").
-					build();
-//			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().
-//					url("https://cdn2.cocinadelirante.com/sites/default/files/images/2023/09/como-hacer-queso-con-1-litro-de-leche.jpg").
+			//ASOCIAMOS SUCURSALES A EMPRESA
+			empresaCarlos.getSucursales().add(sucursalGuaymallen);
+			empresaCarlos.getSucursales().add(sucursalMarDelPlata);
+
+			//ASIGNAMOS EMPRESA A SUCURSALES
+			sucursalGuaymallen.setEmpresa(empresaCarlos);
+			sucursalMarDelPlata.setEmpresa(empresaCarlos);
+			// Grabo las sucursales
+//			sucursalRepository.save(sucursalGuaymallen);
+//			sucursalRepository.save(sucursalMarDelPlata);
+			// Grabi empresa
+			logger.info("Llegue hasta aca");
+			empresaRepository.save(empresaCarlos);
+
+//			// Crear Categorías de productos y subCategorías de los mismos
+//			Categoria categoriaBebidas = Categoria.builder().denominacion("Bebidas").
 //					build();
+//			categoriaRepository.save(categoriaBebidas);
+//
+//			Categoria categoriaGaseosas = Categoria.builder().denominacion("Gaseosas").
+//					build();
+//			categoriaRepository.save(categoriaGaseosas);
+//
+//			Categoria categoriaTragos = Categoria.builder().denominacion("Tragos").
+//					build();
+//			categoriaRepository.save(categoriaTragos);
+//
+//			Categoria categoriaPizzas = Categoria.builder().denominacion("Pizzas").
+//					build();
+//
+//
+//
+//			Categoria categoriaInsumos = Categoria.builder().denominacion("Insumos").
+//					build();
+//
+//			// Grabo la categoría de insumos y de Manufacturados
+//			categoriaRepository.save(categoriaPizzas);
+//			categoriaRepository.save(categoriaInsumos);
+//			// Asigno subCategorías
+//
+//			categoriaBebidas.getSubCategorias().add(categoriaGaseosas);
+//			categoriaBebidas.getSubCategorias().add(categoriaTragos);
+//			// Grabo las Subcategorías
+//			categoriaRepository.save(categoriaBebidas);
+//
+//			logger.info("---------------voy a asignar a Guaymallen--------------------");
+//			//ASOCIAMOS CATEGORIAS CON SUCURSAL
+//			categoriaInsumos.getSucursales().add(sucursalGuaymallen);
+//			// Cargo las categorias a la sucursal guaymallen
+//			sucursalGuaymallen.getCategorias().add(categoriaInsumos);
+//			sucursalGuaymallen.getCategorias().add(categoriaBebidas);
+//			sucursalGuaymallen.getCategorias().add(categoriaGaseosas);
+//			sucursalGuaymallen.getCategorias().add(categoriaTragos);
+//			sucursalGuaymallen.getCategorias().add(categoriaPizzas);
+//			logger.info("{}",sucursalGuaymallen);
+//			// Grabo las categorias que vende esa sucursal
+//			sucursalRepository.save(sucursalGuaymallen);
+//
+//			logger.info("---------------saque el save de abajo-------------------");
+//
+//
+//			logger.info("---------------grabe guaymallen--------------------");
+//
+//			logger.info("---------------voy a asignar a Mardel Plata--------------------");
+//			categoriaInsumos.getSucursales().add(sucursalMarDelPlata);
+//			// Cargo las categorias a la sucursal Mardel Plata
+//			sucursalMarDelPlata.getCategorias().add(categoriaInsumos);
+//			sucursalMarDelPlata.getCategorias().add(categoriaBebidas);
+//			sucursalMarDelPlata.getCategorias().add(categoriaGaseosas);
+//			sucursalMarDelPlata.getCategorias().add(categoriaTragos);
+//			sucursalMarDelPlata.getCategorias().add(categoriaPizzas);
+//// Grabo las categorias que vende esa sucursal
+//			sucursalRepository.save(sucursalMarDelPlata);
+//
+//			logger.info("---------------grabe Mardel Plata--------------------");
 
-			imagenArticuloRepository.save(imagenArticuloPizzaMuzarella);
-			imagenArticuloRepository.save(imagenArticuloPizzaNapolitana);
-			//imagenArticuloRepository.save(imagenArticuloQueso);
 
 
 
-			//ASOCIAMOS IMAGEN CON ARTICULO MANUFACTURADO
-			pizzaMuzarella.getImagenes().add(imagenArticuloPizzaMuzarella);
-			pizzaNapolitana.getImagenes().add(imagenArticuloPizzaNapolitana);
-			//queso.getImagenes().add(imagenArticuloQueso);
 
-			pizzaMuzarella.setUnidadMedida(unidadMedidaPorciones);
-			pizzaNapolitana.setUnidadMedida(unidadMedidaPorciones);
 
-			pizzaMuzarella.setCategoria(categoriaPizzas);
-			pizzaNapolitana.setCategoria(categoriaPizzas);
 
-			articuloManufacturadoRepository.save(pizzaMuzarella);
-			articuloManufacturadoRepository.save(pizzaNapolitana);
+//			Categoria categoriaBebidas = Categoria.builder().denominacion("Bebidas").
+//					build();
+//			categoriaRepository.save(categoriaBebidas);
+//
+//			Categoria categoriaGaseosas = Categoria.builder().denominacion("Gaseosas").
+//					build();
+//			categoriaRepository.save(categoriaGaseosas);
+//
+//			Categoria categoriaTragos = Categoria.builder().denominacion("Tragos").
+//					build();
+//			categoriaRepository.save(categoriaTragos);
+//
+//			Categoria categoriaPizzas = Categoria.builder().denominacion("Pizzas").
+//					build();
+//
+//			Categoria categoriaInsumos = Categoria.builder().denominacion("Insumos").
+//					build();
+//
+//			// Grabo la categoria de insumos y de Manufacturados
+//			categoriaRepository.save(categoriaPizzas);
+//			categoriaRepository.save(categoriaInsumos);
+//			// Asigno subCategorias
+//
+//			categoriaBebidas.getSubCategorias().add(categoriaGaseosas);
+//			categoriaBebidas.getSubCategorias().add(categoriaTragos);
+//			// Grabo las Subcategorias
+//			categoriaRepository.save(categoriaBebidas);
+//
+//			// Crear Unidades de medida
+//			UnidadMedida unidadMedidaLitros = UnidadMedida.builder().denominacion("Litros").build();
+//			UnidadMedida unidadMedidaGramos = UnidadMedida.builder().denominacion("Gramos").build();
+//			UnidadMedida unidadMedidaCantidad = UnidadMedida.builder().denominacion("Cantidad").build();
+//			UnidadMedida unidadMedidaPorciones = UnidadMedida.builder().denominacion("Porciones").build();
+//			unidadMedidaRepository.save(unidadMedidaLitros);
+//			unidadMedidaRepository.save(unidadMedidaGramos);
+//			unidadMedidaRepository.save(unidadMedidaCantidad);
+//			unidadMedidaRepository.save(unidadMedidaPorciones);
+//
+//			// Crear Insumos , coca cola , harina , etc
+//			ArticuloInsumo cocaCola = ArticuloInsumo.builder().
+//					denominacion("Coca cola").
+//					esParaElaborar(false).
+//					stockActual(5).
+//					stockMaximo(50).
+//					precioCompra(50.0).
+//					precioVenta(70.0).
+//					build();
+//			ArticuloInsumo harina = ArticuloInsumo.builder().denominacion("Harina").esParaElaborar(true).stockActual(4).stockMaximo(40).precioCompra(40.0).precioVenta(60.5).build();
+//			ArticuloInsumo queso = ArticuloInsumo.builder().denominacion("Queso").esParaElaborar(true).stockActual(20).stockMaximo(50).precioCompra(23.6).precioVenta(66.6).build();
+//			ArticuloInsumo tomate = ArticuloInsumo.builder().denominacion("Tomate").esParaElaborar(true).stockActual(20).stockMaximo(50).precioCompra(23.6).precioVenta(66.6).build();
+//			// Grabamos los Articulos
+//			articuloInsumoRepository.save(cocaCola);
+//			articuloInsumoRepository.save(harina);
+//			articuloInsumoRepository.save(queso);
+//			articuloInsumoRepository.save(tomate);
+//
+//			cocaCola.setUnidadMedida(unidadMedidaLitros);
+//			harina.setUnidadMedida(unidadMedidaGramos);
+//			queso.setUnidadMedida(unidadMedidaGramos);
+//			tomate.setUnidadMedida(unidadMedidaCantidad);
+//
+//			articuloInsumoRepository.save(cocaCola);
+//			articuloInsumoRepository.save(harina);
+//			articuloInsumoRepository.save(queso);
+//			articuloInsumoRepository.save(tomate);
+//
+//			unidadMedidaLitros.getArticulos().add(cocaCola);
+//			unidadMedidaGramos.getArticulos().add(harina);
+//			unidadMedidaGramos.getArticulos().add(queso);
+//			unidadMedidaCantidad.getArticulos().add(tomate);
+//
+//			unidadMedidaRepository.save(unidadMedidaLitros);
+//			unidadMedidaRepository.save(unidadMedidaGramos);
+//			unidadMedidaRepository.save(unidadMedidaCantidad);
+//			unidadMedidaRepository.save(unidadMedidaPorciones);
+//
+//
+//
+//			// crear fotos para cada insumo
+//			ImagenArticulo imagenArticuloCoca = ImagenArticulo.builder().
+//					url("https://m.media-amazon.com/images/I/51v8nyxSOYL._SL1500_.jpg").
+//					build();
+//			ImagenArticulo imagenArticuloHarina = ImagenArticulo.builder().url("https://mandolina.co/wp-content/uploads/2023/03/648366622-1024x683.jpg").build();
+//			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().url("https://superdepaso.com.ar/wp-content/uploads/2021/06/SANTAROSA-PATEGRAS-04.jpg").build();
+//			ImagenArticulo imagenArticuloTomate = ImagenArticulo.builder().url("https://thefoodtech.com/wp-content/uploads/2020/06/Componentes-de-calidad-en-el-tomate-828x548.jpg").build();
+//
+//			imagenArticuloRepository.save(imagenArticuloCoca);
+//			imagenArticuloRepository.save(imagenArticuloHarina);
+//			imagenArticuloRepository.save(imagenArticuloQueso);
+//			imagenArticuloRepository.save(imagenArticuloTomate);
+//
+//			//ASOCIAMOS IMAGEN CON INSUMOS
+//			cocaCola.getImagenes().add(imagenArticuloCoca);
+//			harina.getImagenes().add(imagenArticuloHarina);
+//			queso.getImagenes().add(imagenArticuloQueso);
+//			tomate.getImagenes().add(imagenArticuloTomate);
+//
+//			articuloInsumoRepository.save(cocaCola);
+//			articuloInsumoRepository.save(harina);
+//			articuloInsumoRepository.save(queso);
+//			articuloInsumoRepository.save(tomate);
+//
+//
+//			logger.info("Hasta aca llego");
+//
+//
+//
+//			harina.setCategoria(categoriaInsumos);
+//			queso.setCategoria(categoriaInsumos);
+//			tomate.setCategoria(categoriaInsumos);
+//			cocaCola.setCategoria(categoriaBebidas);
+//
+//			articuloInsumoRepository.save(harina);
+//			articuloInsumoRepository.save(queso);
+//			articuloInsumoRepository.save(tomate);
+//			articuloInsumoRepository.save(cocaCola);
+//
+//
+////			//ASOCIAMOS CATEGORIA CON INSUMOS
+//			categoriaInsumos.getArticulos().add(harina);
+//			categoriaInsumos.getArticulos().add(queso);
+//			categoriaInsumos.getArticulos().add(tomate);
+//			categoriaGaseosas.getArticulos().add(cocaCola);
+//			categoriaRepository.save(categoriaInsumos);
+//			categoriaRepository.save(categoriaGaseosas);
+//
+////			// Crear Articulos Manufacturados
+//			ArticuloManufacturado pizzaMuzarella = ArticuloManufacturado.builder().
+//					denominacion("Pizza Muzarella").
+//					descripcion("Una pizza clasica").
+//					precioVenta(130.0).
+//					tiempoEstimadoMinutos(15).
+//					preparacion("Pasos de preparacion de una muzza de toda la vida").
+//					build();
+//			ArticuloManufacturado pizzaNapolitana = ArticuloManufacturado.builder().
+//					denominacion("Pizza Napolitana").descripcion("Una pizza clasica").
+//					precioVenta(150.0).
+//					tiempoEstimadoMinutos(15).
+//					preparacion("Pasos de preparacion de una pizza napolitana italiana").
+//					build();
+//
+//			articuloManufacturadoRepository.save(pizzaMuzarella);
+//			articuloManufacturadoRepository.save(pizzaNapolitana);
+//
+//			// Crear fotos para los articulos manufacturados
+//			ImagenArticulo imagenArticuloPizzaMuzarella = ImagenArticulo.builder().
+//					url("https://storage.googleapis.com/fitia-api-bucket/media/images/recipe_images/1002846.jpg").
+//					build();
+//			ImagenArticulo imagenArticuloPizzaNapolitana = ImagenArticulo.builder().
+//					url("https://assets.elgourmet.com/wp-content/uploads/2023/03/8metlvp345_portada-pizza-1024x686.jpg.webp").
+//					build();
+////			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().
+////					url("https://cdn2.cocinadelirante.com/sites/default/files/images/2023/09/como-hacer-queso-con-1-litro-de-leche.jpg").
+////					build();
+//
+//			imagenArticuloRepository.save(imagenArticuloPizzaMuzarella);
+//			imagenArticuloRepository.save(imagenArticuloPizzaNapolitana);
+//			//imagenArticuloRepository.save(imagenArticuloQueso);
+//
+//
+//
+//			//ASOCIAMOS IMAGEN CON ARTICULO MANUFACTURADO
+//			pizzaMuzarella.getImagenes().add(imagenArticuloPizzaMuzarella);
+//			pizzaNapolitana.getImagenes().add(imagenArticuloPizzaNapolitana);
+//			//queso.getImagenes().add(imagenArticuloQueso);
+//
+//			pizzaMuzarella.setUnidadMedida(unidadMedidaPorciones);
+//			pizzaNapolitana.setUnidadMedida(unidadMedidaPorciones);
+//
+//			pizzaMuzarella.setCategoria(categoriaPizzas);
+//			pizzaNapolitana.setCategoria(categoriaPizzas);
+//
+//			articuloManufacturadoRepository.save(pizzaMuzarella);
+//			articuloManufacturadoRepository.save(pizzaNapolitana);
+
+
 			//articuloInsumoRepository.save(queso);
 
 

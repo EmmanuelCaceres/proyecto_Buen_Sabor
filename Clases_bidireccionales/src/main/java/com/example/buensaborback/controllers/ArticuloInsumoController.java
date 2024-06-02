@@ -1,15 +1,11 @@
 package com.example.buensaborback.controllers;
 
-import com.example.buensaborback.Services.ArticuloInsumoService;
-import com.example.buensaborback.Services.ArticuloManufacturadoService;
+import com.example.buensaborback.Services.impl.ArticuloInsumoService;
 import com.example.buensaborback.domain.entities.ArticuloInsumo;
-import com.example.buensaborback.domain.entities.ArticuloManufacturado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")

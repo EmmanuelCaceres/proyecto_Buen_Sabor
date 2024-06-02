@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.envers.Audited;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import java.util.Set;
 @ToString
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+
 public abstract class Articulo extends Base implements Serializable {
 
     /*@Id

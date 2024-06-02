@@ -7,8 +7,8 @@ import { CNavGroup, CNavItem, CNavTitle, CSidebar, CSidebarNav } from "@coreui/r
 export default function SideBar() {
 
     return (
-        <div className="sidebar-container ">
-            <CSidebar className="border-end d-flex flex-column" style={{ height: '100vh' }}>
+        <div className="sidebar-container">
+            <CSidebar className="border-end d-flex flex-column h-100">
                 <CSidebarNav>
                     <CNavTitle>
                         Dashboard

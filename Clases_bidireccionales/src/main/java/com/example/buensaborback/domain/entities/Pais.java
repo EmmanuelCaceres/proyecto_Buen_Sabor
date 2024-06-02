@@ -1,5 +1,6 @@
 package com.example.buensaborback.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,8 @@ public class Pais extends Base{
 
     private String nombre;
 
-    @OneToMany(mappedBy = "pais",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pais",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Builder.Default
+    @JsonBackReference
     private Set<Provincia> provincias = new HashSet<>();
 }

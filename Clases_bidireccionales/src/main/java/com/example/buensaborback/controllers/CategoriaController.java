@@ -1,7 +1,6 @@
 package com.example.buensaborback.controllers;
 
-import com.example.buensaborback.Services.CategoriaService;
-import com.example.buensaborback.domain.entities.ArticuloInsumo;
+import com.example.buensaborback.Services.impl.CategoriaService;
 import com.example.buensaborback.domain.entities.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
