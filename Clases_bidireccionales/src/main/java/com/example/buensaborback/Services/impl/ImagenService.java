@@ -1,5 +1,6 @@
-package com.example.buensaborback.Services;
+package com.example.buensaborback.Services.impl;
 
+import com.example.buensaborback.Services.BaseService;
 import com.example.buensaborback.domain.entities.ImagenArticulo;
 import com.example.buensaborback.repositories.ImagenArticuloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ImagenService implements BaseService<ImagenArticulo>{
+public class ImagenService implements BaseService<ImagenArticulo> {
 
     @Autowired
     private ImagenArticuloRepository imagenArticuloRepository;

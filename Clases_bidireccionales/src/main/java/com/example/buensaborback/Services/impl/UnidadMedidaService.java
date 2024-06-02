@@ -1,5 +1,6 @@
-package com.example.buensaborback.Services;
+package com.example.buensaborback.Services.impl;
 
+import com.example.buensaborback.Services.BaseService;
 import com.example.buensaborback.domain.entities.ArticuloManufacturado;
 import com.example.buensaborback.domain.entities.UnidadMedida;
 import com.example.buensaborback.repositories.UnidadMedidaRepository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UnidadMedidaService implements BaseService<UnidadMedida>{
+public class UnidadMedidaService implements BaseService<UnidadMedida> {
 
     @Autowired
     public UnidadMedidaRepository unidadMedidaRepository;

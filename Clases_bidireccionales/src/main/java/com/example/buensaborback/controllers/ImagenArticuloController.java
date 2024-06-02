@@ -1,6 +1,6 @@
 package com.example.buensaborback.controllers;
 
-import com.example.buensaborback.Services.ImagenService;
+import com.example.buensaborback.Services.impl.ImagenService;
 import com.example.buensaborback.domain.entities.ImagenArticulo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

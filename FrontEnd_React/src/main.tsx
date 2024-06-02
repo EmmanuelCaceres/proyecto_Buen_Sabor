@@ -15,6 +15,8 @@ import GrillaPromocion from './Components/GrillaPromocion.tsx';
 import GrillaInsumo from './Components/GrillaInsumo.tsx';
 import SaveInsumo from './Components/SaveInsumo.tsx';
 import SaveCategoria from './Components/SaveCategoria.tsx';
+import HomeEmpresa from './Components/HomeEmpresa.tsx';
+import Sucursales from './Components/Sucursales.tsx';
 
 const router = createBrowserRouter([
   {
@@ -63,7 +65,16 @@ const router = createBrowserRouter([
         element:<GrillaInsumo/>
       }
     ],
+    
   },
+  {
+    path:"/homeEmpresa",
+    element:<HomeEmpresa/>
+  },
+  {
+    path:"/sucursales/:id",
+    element:<Sucursales></Sucursales>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

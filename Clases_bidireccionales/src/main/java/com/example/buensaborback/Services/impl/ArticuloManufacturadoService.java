@@ -1,5 +1,6 @@
-package com.example.buensaborback.Services;
+package com.example.buensaborback.Services.impl;
 
+import com.example.buensaborback.Services.BaseService;
 import com.example.buensaborback.domain.entities.Articulo;
 import com.example.buensaborback.domain.entities.ArticuloManufacturado;
 import com.example.buensaborback.repositories.ArticuloManufacturadoRepository;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ArticuloManufacturadoService implements BaseService<ArticuloManufacturado>{
+public class ArticuloManufacturadoService implements BaseService<ArticuloManufacturado> {
     @Autowired
     private ArticuloManufacturadoRepository articuloManufacturadoRepository;
 

@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.envers.Audited;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @ToString
 @Setter
 @SuperBuilder
+@Audited
 public abstract class Base implements Serializable {
 
     @Id
