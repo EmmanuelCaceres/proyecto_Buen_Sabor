@@ -3,6 +3,8 @@ package com.example.buensaborback.domain.entities;
 import com.example.buensaborback.domain.entities.enums.Estado;
 import com.example.buensaborback.domain.entities.enums.FormaPago;
 import com.example.buensaborback.domain.entities.enums.TipoEnvio;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = {"domicilio", "sucursal", "factura", "cliente", "empleado"})
 @Builder
 public class Pedido extends Base{
 
@@ -31,13 +33,16 @@ public class Pedido extends Base{
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "domicilio_id")
+    @JsonIgnore
     private Domicilio domicilio;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sucursal_id")
+    @JsonIgnore
     private Sucursal sucursal;
 
     @OneToOne(mappedBy = "pedido")
+    @JsonIgnore
     private Factura factura;
 
     @OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -46,10 +51,12 @@ public class Pedido extends Base{
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
     private Cliente cliente;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "empleado_id")
+    @JsonIgnore
     private Empleado empleado;
 
 }

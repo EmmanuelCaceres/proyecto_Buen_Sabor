@@ -1,5 +1,8 @@
 package com.example.buensaborback.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +12,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = {"pedido"})
 @Builder
 public class DetallePedido extends Base{
 
@@ -18,10 +21,12 @@ public class DetallePedido extends Base{
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "articulo_id")
+
     private Articulo articulo;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "pedido_id")
+    @JsonBackReference
     private Pedido pedido;
 
 }
