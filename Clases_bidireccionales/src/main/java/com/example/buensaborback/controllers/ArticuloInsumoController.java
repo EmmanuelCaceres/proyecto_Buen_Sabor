@@ -88,4 +88,13 @@ public class ArticuloInsumoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error por favor intente mas tarde.\"}");
         }
     }
+
+    @GetMapping("insumosParaVentas")
+    public ResponseEntity<?> getArticulosParaVenta(){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(articuloInsumoService.getArticulosParaVenta());
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error por favor intente mas tarde.\"}");
+        }
+    }
 }

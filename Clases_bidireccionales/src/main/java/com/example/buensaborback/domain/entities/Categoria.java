@@ -1,6 +1,7 @@
 package com.example.buensaborback.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Categoria extends Base{
 
     @ManyToMany(mappedBy = "categorias")
     @Builder.Default
+    @JsonIgnore
     private Set<Sucursal> sucursales = new HashSet<>();
 
     @OneToMany(mappedBy = "categoria",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -31,6 +33,7 @@ public class Categoria extends Base{
     @OneToMany
     @JoinColumn(name = "categoria_id")
     @Builder.Default
+    @JsonBackReference("subCategorias")
     private Set<Categoria> subCategorias = new HashSet<>();
 
 }

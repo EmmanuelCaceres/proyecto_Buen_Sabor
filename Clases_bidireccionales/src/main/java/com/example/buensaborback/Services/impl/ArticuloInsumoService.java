@@ -102,4 +102,8 @@ public class ArticuloInsumoService implements BaseService<ArticuloInsumo> {
             throw new Exception(e.getMessage());
         }
     }
+
+    public List<ArticuloInsumo> getArticulosParaVenta(){
+        return articuloInsumoRepository.getArticulosParaVenta();
+    }
 }

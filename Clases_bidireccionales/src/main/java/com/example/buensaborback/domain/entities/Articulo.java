@@ -1,7 +1,9 @@
 package com.example.buensaborback.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,12 +22,8 @@ import java.util.Set;
 @ToString
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-
 public abstract class Articulo extends Base implements Serializable {
 
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    protected Long id;*/
     protected String denominacion;
     protected Double precioVenta;
 
@@ -41,11 +39,12 @@ public abstract class Articulo extends Base implements Serializable {
 
     @ManyToMany(mappedBy = "articulos")
     @Builder.Default
+    @JsonIgnore
     protected Set<Promocion> estaEnPromociones = new HashSet<>();
 
     @OneToMany(mappedBy = "articulo",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @Builder.Default
-    @JsonIgnoreProperties("articulo")
+    @JsonBackReference
     protected Set<DetallePedido> detallesPedido = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.PERSIST)

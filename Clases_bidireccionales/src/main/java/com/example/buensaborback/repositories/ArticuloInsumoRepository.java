@@ -21,4 +21,7 @@ public interface ArticuloInsumoRepository extends BaseRepository<ArticuloInsumo,
             "WHERE :denominacion IS NOT NULL AND LOWER(ai.denominacion) LIKE LOWER(CONCAT('%', :denominacion, '%'))")
     List<ArticuloInsumo> getByName (@Param("denominacion") String denominacion);
 
+    @Query("SELECT ai FROM ArticuloInsumo ai WHERE ai.esParaElaborar = false")
+    List<ArticuloInsumo> getArticulosParaVenta();
+
 }
