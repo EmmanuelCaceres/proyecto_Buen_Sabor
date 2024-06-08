@@ -32,7 +32,7 @@ public class PedidoServiceImpl implements IPedidoService {
     @Override
     public List<Pedido> findAll() throws Exception {
 
-        return null;
+        return pedidoRepository.findAll();
     }
 
     @Override

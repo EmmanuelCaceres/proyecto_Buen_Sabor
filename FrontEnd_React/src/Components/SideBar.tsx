@@ -82,6 +82,12 @@ export default function SideBar() {
                             Insumos
                         </Link>
                     </CNavItem>
+                    <CNavItem>
+                        <Link to="/pedidos" className="nav-link">
+                            <CIcon customClassName="nav-icon" icon={cilCart} />
+                            Pedidos
+                        </Link>
+                    </CNavItem>
                 </CSidebarNav>
             </CSidebar>
         </div>

@@ -12,4 +12,13 @@ export default class ArticuloInsumoService extends GenericFetch<IArticuloInsumo>
         return data as IArticuloInsumo[];
     }
 
+    async getInsumoParaVentas():Promise<IArticuloInsumo[] | null>{
+        const response = await fetch(`${this.baseUrl}`);
+        if (!response.ok) {
+            return null;
+        }
+        const data = await response.json();
+        return data as IArticuloInsumo[];
+    }
+
 }
