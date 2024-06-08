@@ -17,6 +17,9 @@ import SaveInsumo from './Components/SaveInsumo.tsx';
 import SaveCategoria from './Components/SaveCategoria.tsx';
 import HomeEmpresa from './Components/HomeEmpresa.tsx';
 import Sucursales from './Components/Sucursales.tsx';
+import Menu from './Components/Lado Cliente/Menu.tsx';
+import Pedidos from './Components/Pedidos.tsx';
+import { CarritoContextProvider } from './Components/Lado Cliente/context/CarritoContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -63,6 +66,10 @@ const router = createBrowserRouter([
       {
         path:"insumos",
         element:<GrillaInsumo/>
+      },
+      {
+        path:"pedidos",
+        element:<Pedidos/>
       }
     ],
     
@@ -73,12 +80,19 @@ const router = createBrowserRouter([
   },
   {
     path:"/sucursales/:id",
-    element:<Sucursales></Sucursales>
+    element:<Sucursales/>
+  },
+  {
+    path:"/cliente/menu",
+    element:<Menu/>
   }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <CarritoContextProvider>
+      <RouterProvider router={router} />
+    </CarritoContextProvider>
   </React.StrictMode>,
 )

@@ -312,11 +312,11 @@ public class BuenSaborBackApplication {
 
 			// crear fotos para cada insumo
 			ImagenArticulo imagenArticuloCoca = ImagenArticulo.builder().
-					url("https://m.media-amazon.com/images/I/51v8nyxSOYL._SL1500_.jpg").
+					url("coca-cola.jpg").
 					build();
-			ImagenArticulo imagenArticuloHarina = ImagenArticulo.builder().url("https://mandolina.co/wp-content/uploads/2023/03/648366622-1024x683.jpg").build();
-			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().url("https://superdepaso.com.ar/wp-content/uploads/2021/06/SANTAROSA-PATEGRAS-04.jpg").build();
-			ImagenArticulo imagenArticuloTomate = ImagenArticulo.builder().url("https://thefoodtech.com/wp-content/uploads/2020/06/Componentes-de-calidad-en-el-tomate-828x548.jpg").build();
+			ImagenArticulo imagenArticuloHarina = ImagenArticulo.builder().url("Harina.jpg").build();
+			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().url("queso.jpg").build();
+			ImagenArticulo imagenArticuloTomate = ImagenArticulo.builder().url("tomate.jpg").build();
 
 			imagenArticuloRepository.save(imagenArticuloCoca);
 			imagenArticuloRepository.save(imagenArticuloHarina);
@@ -378,10 +378,10 @@ public class BuenSaborBackApplication {
 
 			// Crear fotos para los articulos manufacturados
 			ImagenArticulo imagenArticuloPizzaMuzarella = ImagenArticulo.builder().
-					url("https://storage.googleapis.com/fitia-api-bucket/media/images/recipe_images/1002846.jpg").
+					url("pizza-muzzarella.jpg").
 					build();
 			ImagenArticulo imagenArticuloPizzaNapolitana = ImagenArticulo.builder().
-					url("https://assets.elgourmet.com/wp-content/uploads/2023/03/8metlvp345_portada-pizza-1024x686.jpg.webp").
+					url("pizza-napolitana.jpg").
 					build();
 //			ImagenArticulo imagenArticuloQueso = ImagenArticulo.builder().
 //					url("https://cdn2.cocinadelirante.com/sites/default/files/images/2023/09/como-hacer-queso-con-1-litro-de-leche.jpg").
